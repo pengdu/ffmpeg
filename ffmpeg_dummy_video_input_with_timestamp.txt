@@ -1,0 +1,6 @@
+ffmpeg -y -f lavfi -i "testsrc=duration=10:size=1280x720:rate=25" -an -sn -vf "setpts=PTS-STARTPTS,drawtext=fix_bounds=true: fontcolor=yellow: box=1: boxcolor=0x00000000@0.90: font='Courier New': fontfile='C:/Windows/Fonts/cour.ttf': alpha=0.90: fontsize=32: x=10: y=(main_h-text_h)/2: text='Frame Timestamp\: %{pts\:hms}'"  dummy_output.mkv
+
+--------------------------------------------------------
+
+other options:
+ffmpeg -f lavfi -i "life=size=300x200:mold=10:rate=60:random_fill_ratio=0.1:death_color=#C83232:life_color=#00ff00,scale=1200:800:flags=16"

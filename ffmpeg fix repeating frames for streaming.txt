@@ -1,0 +1,6 @@
+ffmpeg -y -i aa.mp4 -vf "mpdecimate,setpts=N/FRAME_RATE/TB" -preset veryslow  -tune zerolatency -pix_fmt yuv420p -movflags "+faststart" -crf 23 "bb.mkv"
+
+
+###with video-sync and audio-sync
+
+ffmpeg -y -i aa.mp4 -preset veryslow -crf 18 -vsync 2 -async 1 -vf "mpdecimate,setpts=N/FRAME_RATE/TB" -pix_fmt yuv420p -tune zerolatency -movflags "+faststart"  "bb.mkv"

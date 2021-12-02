@@ -1,0 +1,2 @@
+ffmpeg -y -hide_banner -i file1.mp4     file2.mp4
+

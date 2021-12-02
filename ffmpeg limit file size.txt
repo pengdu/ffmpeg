@@ -1,0 +1,8 @@
+To convert a .avi file to mpeg for dvd players, run the command below:
+
+$ ffmpeg -i video.avi -target pal-dvd -ps 2000000000 -aspect 16:9 video.mpeg
+Explanation about the options used in above command.
+
+target pal-dvd : Output format
+ps 2000000000 maximum size for the output file, in bits (here, 2 Gb).
+aspect 16:9 : Widescreen.

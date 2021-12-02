@@ -1,0 +1,14 @@
+ffmpeg -i input.wav -c:a libfdk_aac -b:a 128k output.m4a
+-strict experimental
+
+ffmpeg -i input.wav -c:a aac -b:a 160k output.m4a
+ffmpeg -i input.wav -c:a aac -q:a 2 output.m4a
+-cutoff 15000
+
+-codec:a libvorbis   1.ogg
+
+-qscale:a 5 
+where 10 is highest quality. 3–6 is a good range to try. Default is -qscale:a 3.
+
+
+ffmpeg -i my-48000.wav -af aresample=resampler=soxr -ar 44100 my-44100.wav

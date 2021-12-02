@@ -1,0 +1,1 @@
+ffmpeg -hide_banner -y -f lavfi -i "testsrc2=size=240x240:rate=1:duration=\'00\:00\:01\.00\'" -pix_fmt "yuv420p" testsrc2.mp4

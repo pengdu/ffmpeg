@@ -1,0 +1,28 @@
+ffmpeg -x264opts colorprim=bt709:transfer=bt709:colormatrix=smpte170m
+
+Unfortunately each of the popular browsers handle color in HTML 5 videos differently,
+which makes it difficult to get consistent colors.
+
+The H.264 (MP4) bitstream can optionally encode which set of color primaries,
+transfer characteristics, and matrix coefficients you are using; 
+
+these can be set with e.g. ffmpeg -x264opts colorprim=bt709:transfer=bt709:colormatrix=smpte170m. 
+At least on Mac OS X, Safari and Quicktime pay attention to these bits in the H.264 video,
+and will convert the colors from the specified encoding to the color profile of your monitor,
+producing nice and consistent colors.
+
+Chrome seems to ignore these bits and assume that both H.264 and VP8 video are using BT.709 color primaries
+(even for VP8 SD video which the VP8 spec says should be BT.601),
+although it will convert that to the color profile of your monitor.
+
+Firefox on the other hand seems to skip the output conversion for VP8 video elements 
+and just assumes that your monitor is sRGB, 
+so the colors are not consistent between monitors with different color profiles, 
+and are likely to be way off on a wide gamut monitor.
+
+(I have only tested on Mac; the browsers may work differently on another OS.)
+
+Sorry I don't have any good solutions.
+
+It may be possible to address the issue by manipulating the video in Javascript using a canvas,
+although something like that may have poor performance.

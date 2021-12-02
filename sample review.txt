@@ -1,0 +1,18 @@
+ffmpeg -threads 8 -ss 100 -i "Independents.Day.2016.HDRip.XviD.AC3-EVO.avi" -bt 100M -vf "select=gt(scene\,0.20)" -frames:v 50 -filter:v fps=1/131 out%04d.jpg
+
+
+50 (!!!) Screenshots: http://q.gs/6965854/xmen-apocalypse-1080p-hdtc-x264-devived
+
+'X-Men.Apocalypse.2016.1080p.HDTC.x264.DEVIVED.mp4'
+
+A9/V8.5 Watchable? ~95%~
+
+Created:  2016-06-15 17:54:46 UTC
+Duration: 02:23:58.27
+Bitrate:  3126 kb/s
+Encoder:  Yamb 2.1.0.0 [http://yamb.unite-video.com] (GPAC ISO Audio Handler)
+
+Video: mp4, h264 (High) (avc1 / 0x31637661), yuv420p, 1920x786, 2803 kb/s, 29.97 fps, 29.97 tbr, 30k tbn, 59.94 tbc
+Audio: mp3 (mp4a / 0x6134706D), 48000 Hz, stereo, s16p, 320 kb/s (default)
+
+Good encoding, high refresh-rate, decent screen-resoluion, Will play very nice on your large-screen TV with no lags.

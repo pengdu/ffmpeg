@@ -1,0 +1,1 @@
+ffmpeg  -i 20160509_221713.mp4 -g 1 -filter:v "yadif=1:-1:0"  20160509_221713_deinterlase.mp4

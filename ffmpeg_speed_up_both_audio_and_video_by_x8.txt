@@ -1,0 +1,2 @@
+ffmpeg -i output.mkv -vf setpts=0.125*PTS -af atempo=8.0 faster_output.mkv
+

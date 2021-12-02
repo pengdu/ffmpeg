@@ -1,0 +1,5 @@
+# testing good quality repeat
+# ---------------------------------
+file 'c:/users/elad/desktop/out.mp4'
+file 'c:/users/elad/desktop/out.mp4'
+# ---------------------------------

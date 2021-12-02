@@ -1,0 +1,213 @@
+C:\Users\Elad>ffmpeg -hwaccel dxva2 -threads 1 -i INPUT -f null - -benchmark
+ffmpeg version N-80615-g6935aaa Copyright (c) 2000-2016 the FFmpeg developers
+  built with gcc 5.4.0 (GCC)
+  configuration: --enable-gpl --enable-version3 --disable-w32threads --enable-dxva2 --enable-libmfx --enable-nvenc
+--enable-avisynth --enable-bzlib --enable-fontconfig --enable-frei0r --enable-gnutls --enable-iconv --enable-libass
+ --enable-libbluray --enable-libbs2b --enable-libcaca --enable-libfreetype --enable-libgme --enable-libgsm --enable
+-libilbc --enable-libmodplug --enable-libmp3lame --enable-libopencore-amrnb --enable-libopencore-amrwb --enable-lib
+openjpeg --enable-libopus --enable-librtmp --enable-libschroedinger --enable-libsnappy --enable-libsoxr --enable-li
+bspeex --enable-libtheora --enable-libtwolame --enable-libvidstab --enable-libvo-amrwbenc --enable-libvorbis --enab
+le-libvpx --enable-libwavpack --enable-libwebp --enable-libx264 --enable-libx265 --enable-libxavs --enable-libxvid
+--enable-libzimg --enable-lzma --enable-decklink --enable-zlib
+  libavutil      55. 26.100 / 55. 26.100
+  libavcodec     57. 46.100 / 57. 46.100
+  libavformat    57. 40.101 / 57. 40.101
+  libavdevice    57.  0.101 / 57.  0.101
+  libavfilter     6. 46.102 /  6. 46.102
+  libswscale      4.  1.100 /  4.  1.100
+  libswresample   2.  1.100 /  2.  1.100
+  libpostproc    54.  0.100 / 54.  0.100
+INPUT: No such file or directory
+bench: maxrss=11948kB
+
+C:\Users\Elad>ffmpeg -hwaccel dxva2 -threads 1 -i null -f null - -benchmark
+ffmpeg version N-80615-g6935aaa Copyright (c) 2000-2016 the FFmpeg developers
+  built with gcc 5.4.0 (GCC)
+  configuration: --enable-gpl --enable-version3 --disable-w32threads --enable-dxva2 --enable-libmfx --enable-nvenc
+--enable-avisynth --enable-bzlib --enable-fontconfig --enable-frei0r --enable-gnutls --enable-iconv --enable-libass
+ --enable-libbluray --enable-libbs2b --enable-libcaca --enable-libfreetype --enable-libgme --enable-libgsm --enable
+-libilbc --enable-libmodplug --enable-libmp3lame --enable-libopencore-amrnb --enable-libopencore-amrwb --enable-lib
+openjpeg --enable-libopus --enable-librtmp --enable-libschroedinger --enable-libsnappy --enable-libsoxr --enable-li
+bspeex --enable-libtheora --enable-libtwolame --enable-libvidstab --enable-libvo-amrwbenc --enable-libvorbis --enab
+le-libvpx --enable-libwavpack --enable-libwebp --enable-libx264 --enable-libx265 --enable-libxavs --enable-libxvid
+--enable-libzimg --enable-lzma --enable-decklink --enable-zlib
+  libavutil      55. 26.100 / 55. 26.100
+  libavcodec     57. 46.100 / 57. 46.100
+  libavformat    57. 40.101 / 57. 40.101
+  libavdevice    57.  0.101 / 57.  0.101
+  libavfilter     6. 46.102 /  6. 46.102
+  libswscale      4.  1.100 /  4.  1.100
+  libswresample   2.  1.100 /  2.  1.100
+  libpostproc    54.  0.100 / 54.  0.100
+null: No such file or directory
+bench: maxrss=11948kB
+
+C:\Users\Elad>cd Desktop
+
+C:\Users\Elad\Desktop>ffmpeg -i input -c:v nvenc_h264 -profile high444p -pixel_format yuv444p -preset default outpu
+t.mp4
+ffmpeg version N-80615-g6935aaa Copyright (c) 2000-2016 the FFmpeg developers
+  built with gcc 5.4.0 (GCC)
+  configuration: --enable-gpl --enable-version3 --disable-w32threads --enable-dxva2 --enable-libmfx --enable-nvenc
+--enable-avisynth --enable-bzlib --enable-fontconfig --enable-frei0r --enable-gnutls --enable-iconv --enable-libass
+ --enable-libbluray --enable-libbs2b --enable-libcaca --enable-libfreetype --enable-libgme --enable-libgsm --enable
+-libilbc --enable-libmodplug --enable-libmp3lame --enable-libopencore-amrnb --enable-libopencore-amrwb --enable-lib
+openjpeg --enable-libopus --enable-librtmp --enable-libschroedinger --enable-libsnappy --enable-libsoxr --enable-li
+bspeex --enable-libtheora --enable-libtwolame --enable-libvidstab --enable-libvo-amrwbenc --enable-libvorbis --enab
+le-libvpx --enable-libwavpack --enable-libwebp --enable-libx264 --enable-libx265 --enable-libxavs --enable-libxvid
+--enable-libzimg --enable-lzma --enable-decklink --enable-zlib
+  libavutil      55. 26.100 / 55. 26.100
+  libavcodec     57. 46.100 / 57. 46.100
+  libavformat    57. 40.101 / 57. 40.101
+  libavdevice    57.  0.101 / 57.  0.101
+  libavfilter     6. 46.102 /  6. 46.102
+  libswscale      4.  1.100 /  4.  1.100
+  libswresample   2.  1.100 /  2.  1.100
+  libpostproc    54.  0.100 / 54.  0.100
+input: No such file or directory
+
+C:\Users\Elad\Desktop>ffmpeg -i a.mp4 -c:v nvenc_h264 -profile high444p -pixel_format yuv444p -preset default outpu
+t.mp4
+ffmpeg version N-80615-g6935aaa Copyright (c) 2000-2016 the FFmpeg developers
+  built with gcc 5.4.0 (GCC)
+  configuration: --enable-gpl --enable-version3 --disable-w32threads --enable-dxva2 --enable-libmfx --enable-nvenc
+--enable-avisynth --enable-bzlib --enable-fontconfig --enable-frei0r --enable-gnutls --enable-iconv --enable-libass
+ --enable-libbluray --enable-libbs2b --enable-libcaca --enable-libfreetype --enable-libgme --enable-libgsm --enable
+-libilbc --enable-libmodplug --enable-libmp3lame --enable-libopencore-amrnb --enable-libopencore-amrwb --enable-lib
+openjpeg --enable-libopus --enable-librtmp --enable-libschroedinger --enable-libsnappy --enable-libsoxr --enable-li
+bspeex --enable-libtheora --enable-libtwolame --enable-libvidstab --enable-libvo-amrwbenc --enable-libvorbis --enab
+le-libvpx --enable-libwavpack --enable-libwebp --enable-libx264 --enable-libx265 --enable-libxavs --enable-libxvid
+--enable-libzimg --enable-lzma --enable-decklink --enable-zlib
+  libavutil      55. 26.100 / 55. 26.100
+  libavcodec     57. 46.100 / 57. 46.100
+  libavformat    57. 40.101 / 57. 40.101
+  libavdevice    57.  0.101 / 57.  0.101
+  libavfilter     6. 46.102 /  6. 46.102
+  libswscale      4.  1.100 /  4.  1.100
+  libswresample   2.  1.100 /  2.  1.100
+  libpostproc    54.  0.100 / 54.  0.100
+Input #0, mov,mp4,m4a,3gp,3g2,mj2, from 'a.mp4':
+  Metadata:
+    major_brand     : mp42
+    minor_version   : 0
+    compatible_brands: isommp42
+    creation_time   : 2015-04-20 08:24:35
+  Duration: 00:04:21.48, start: 0.000000, bitrate: 1839 kb/s
+    Stream #0:0(und): Video: h264 (High) (avc1 / 0x31637661), yuv420p, 1280x720 [SAR 1:1 DAR 16:9], 1645 kb/s, 29.9
+7 fps, 29.97 tbr, 30k tbn, 59.94 tbc (default)
+    Metadata:
+      creation_time   : 1970-01-01 00:00:00
+      handler_name    : VideoHandler
+    Stream #0:1(und): Audio: aac (LC) (mp4a / 0x6134706D), 44100 Hz, stereo, fltp, 191 kb/s (default)
+    Metadata:
+      creation_time   : 2015-04-20 08:24:37
+      handler_name    : IsoMedia File Produced by Google, 5-11-2011
+Please use -profile:a or -profile:v, -profile is ambiguous
+[nvenc_h264 @ 0000000000549c40] Cannot load nvcuda.dll
+Output #0, mp4, to 'output.mp4':
+  Metadata:
+    major_brand     : mp42
+    minor_version   : 0
+    compatible_brands: isommp42
+    Stream #0:0(und): Unknown: none, SAR 1:1 DAR 0:0 (default)
+    Metadata:
+      creation_time   : 1970-01-01 00:00:00
+      handler_name    : VideoHandler
+      encoder         : Lavc57.46.100 nvenc_h264
+    Stream #0:1(und): Unknown: none (default)
+    Metadata:
+      creation_time   : 2015-04-20 08:24:37
+      handler_name    : IsoMedia File Produced by Google, 5-11-2011
+      encoder         : Lavc57.46.100 aac
+Stream mapping:
+  Stream #0:0 -> #0:0 (h264 (native) -> h264 (nvenc_h264))
+  Stream #0:1 -> #0:1 (aac (native) -> aac (native))
+Error while opening encoder for output stream #0:0 - maybe incorrect parameters such as bit_rate, rate, width or he
+ight
+
+C:\Users\Elad\Desktop>ffmpeg -hwaccel dxva2 -threads 1 -i INPUT -f null - -benchmark
+ffmpeg version N-80615-g6935aaa Copyright (c) 2000-2016 the FFmpeg developers
+  built with gcc 5.4.0 (GCC)
+  configuration: --enable-gpl --enable-version3 --disable-w32threads --enable-dxva2 --enable-libmfx --enable-nvenc
+--enable-avisynth --enable-bzlib --enable-fontconfig --enable-frei0r --enable-gnutls --enable-iconv --enable-libass
+ --enable-libbluray --enable-libbs2b --enable-libcaca --enable-libfreetype --enable-libgme --enable-libgsm --enable
+-libilbc --enable-libmodplug --enable-libmp3lame --enable-libopencore-amrnb --enable-libopencore-amrwb --enable-lib
+openjpeg --enable-libopus --enable-librtmp --enable-libschroedinger --enable-libsnappy --enable-libsoxr --enable-li
+bspeex --enable-libtheora --enable-libtwolame --enable-libvidstab --enable-libvo-amrwbenc --enable-libvorbis --enab
+le-libvpx --enable-libwavpack --enable-libwebp --enable-libx264 --enable-libx265 --enable-libxavs --enable-libxvid
+--enable-libzimg --enable-lzma --enable-decklink --enable-zlib
+  libavutil      55. 26.100 / 55. 26.100
+  libavcodec     57. 46.100 / 57. 46.100
+  libavformat    57. 40.101 / 57. 40.101
+  libavdevice    57.  0.101 / 57.  0.101
+  libavfilter     6. 46.102 /  6. 46.102
+  libswscale      4.  1.100 /  4.  1.100
+  libswresample   2.  1.100 /  2.  1.100
+  libpostproc    54.  0.100 / 54.  0.100
+INPUT: No such file or directory
+bench: maxrss=11948kB
+
+C:\Users\Elad\Desktop>ffmpeg -hwaccel dxva2 -threads 1 -i a.mp4 -f null - -benchmark
+ffmpeg version N-80615-g6935aaa Copyright (c) 2000-2016 the FFmpeg developers
+  built with gcc 5.4.0 (GCC)
+  configuration: --enable-gpl --enable-version3 --disable-w32threads --enable-dxva2 --enable-libmfx --enable-nvenc
+--enable-avisynth --enable-bzlib --enable-fontconfig --enable-frei0r --enable-gnutls --enable-iconv --enable-libass
+ --enable-libbluray --enable-libbs2b --enable-libcaca --enable-libfreetype --enable-libgme --enable-libgsm --enable
+-libilbc --enable-libmodplug --enable-libmp3lame --enable-libopencore-amrnb --enable-libopencore-amrwb --enable-lib
+openjpeg --enable-libopus --enable-librtmp --enable-libschroedinger --enable-libsnappy --enable-libsoxr --enable-li
+bspeex --enable-libtheora --enable-libtwolame --enable-libvidstab --enable-libvo-amrwbenc --enable-libvorbis --enab
+le-libvpx --enable-libwavpack --enable-libwebp --enable-libx264 --enable-libx265 --enable-libxavs --enable-libxvid
+--enable-libzimg --enable-lzma --enable-decklink --enable-zlib
+  libavutil      55. 26.100 / 55. 26.100
+  libavcodec     57. 46.100 / 57. 46.100
+  libavformat    57. 40.101 / 57. 40.101
+  libavdevice    57.  0.101 / 57.  0.101
+  libavfilter     6. 46.102 /  6. 46.102
+  libswscale      4.  1.100 /  4.  1.100
+  libswresample   2.  1.100 /  2.  1.100
+  libpostproc    54.  0.100 / 54.  0.100
+Input #0, mov,mp4,m4a,3gp,3g2,mj2, from 'a.mp4':
+  Metadata:
+    major_brand     : mp42
+    minor_version   : 0
+    compatible_brands: isommp42
+    creation_time   : 2015-04-20 08:24:35
+  Duration: 00:04:21.48, start: 0.000000, bitrate: 1839 kb/s
+    Stream #0:0(und): Video: h264 (High) (avc1 / 0x31637661), yuv420p, 1280x720 [SAR 1:1 DAR 16:9], 1645 kb/s, 29.9
+7 fps, 29.97 tbr, 30k tbn, 59.94 tbc (default)
+    Metadata:
+      creation_time   : 1970-01-01 00:00:00
+      handler_name    : VideoHandler
+    Stream #0:1(und): Audio: aac (LC) (mp4a / 0x6134706D), 44100 Hz, stereo, fltp, 191 kb/s (default)
+    Metadata:
+      creation_time   : 2015-04-20 08:24:37
+      handler_name    : IsoMedia File Produced by Google, 5-11-2011
+[null @ 00000000004a8780] Using AVStream.codec to pass codec parameters to muxers is deprecated, use AVStream.codec
+par instead.
+    Last message repeated 1 times
+Output #0, null, to 'pipe:':
+  Metadata:
+    major_brand     : mp42
+    minor_version   : 0
+    compatible_brands: isommp42
+    encoder         : Lavf57.40.101
+    Stream #0:0(und): Video: wrapped_avframe, yuv420p, 1280x720 [SAR 1:1 DAR 16:9], q=2-31, 200 kb/s, 29.97 fps, 29
+.97 tbn, 29.97 tbc (default)
+    Metadata:
+      creation_time   : 1970-01-01 00:00:00
+      handler_name    : VideoHandler
+      encoder         : Lavc57.46.100 wrapped_avframe
+    Stream #0:1(und): Audio: pcm_s16le, 44100 Hz, stereo, s16, 1411 kb/s (default)
+    Metadata:
+      creation_time   : 2015-04-20 08:24:37
+      handler_name    : IsoMedia File Produced by Google, 5-11-2011
+      encoder         : Lavc57.46.100 pcm_s16le
+Stream mapping:
+  Stream #0:0 -> #0:0 (h264 (native) -> wrapped_avframe (native))
+  Stream #0:1 -> #0:1 (aac (native) -> pcm_s16le (native))
+Press [q] to stop, [?] for help
+Input stream #0:0 frame changed from size:1280x720 fmt:yuv420p to size:1280x720 fmt:nv12
+frame= 7836 fps= 19 q=-0.0 Lsize=N/A time=00:04:21.47 bitrate=N/A speed=0.629x
+video:3734kB audio:45044kB subtitle:0kB other streams:0kB global headers:0kB muxing overhead: unknown
+bench: utime=345.449s
+bench: maxrss=122000kB

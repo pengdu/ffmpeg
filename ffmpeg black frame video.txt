@@ -1,0 +1,9 @@
+ffmpeg -s 640x480 -f rawvideo -pix_fmt rgb24 -r 25 -i /dev/zero \
+-i music.mp3 -vcodec libx264 -preset medium -tune stillimage \
+-crf 24 -acodec copy -shortest output.mkv
+
+Or you could use a single image with ImageMagick/GraphicsMagick:
+convert -size 320x240 xc:black black.png
+
+Then mux with ffmpeg:
+ffmpeg -loop 1 -i black.png -i music.ogg -acodec copy -shortest output

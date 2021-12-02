@@ -1,0 +1,2 @@
+ffmpeg -threads 1 -i 20160515_0752371.mp4 -filter:v "yadif=3:1:1,setpts=0.125*PTS" -threads 1 -an -threads 1 out.mp4
+ffmpeg -threads 1 -i 20160515_0752371.mp4 -filter:v "yadif=3:1:1,hqdn3d=1.5:1.5:6:6,setpts=0.125*PTS" -threads 1 -an -threads 1 out.mp4

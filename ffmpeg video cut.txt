@@ -1,0 +1,5 @@
+ffmpeg -threads 4 -i SOURCE.MP4 -ss 00:24:30 -t 00:02:00.00 -vcodec copy -acodec copy TARGET.MP4
+ffmpeg -threads 4 -i TARGET.MP4 -g 1 TARGET_FINAL.MP4
+
+
+ffmpeg -threads 4 -ss 00:39:00 -i -ss 00:39:00.680 -t 00:01:20 -i inVideo.mp4 -vcodec copy -acodec copy outVideo.mp4

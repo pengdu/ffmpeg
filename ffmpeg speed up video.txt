@@ -1,0 +1,1 @@
+ffmpeg -i 20160509_221713.mp4 -filter:v "setpts=0.125*PTS" -vcodec copy -an output.mkv

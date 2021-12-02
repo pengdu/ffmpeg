@@ -1,0 +1,10 @@
+-x264opts keyint=123:min-keyint=20
+-x264-params
+
+lookahead_threads=2 sliced_threads=0
+
+x264opts=cabac=0:interlaced=1:tff=1:colormatrix=bt470bg:sar=64/45:threads=auto
+"C:\SOFTWARE\ffmpeg\0-latest\bin\ffmpeg.exe" -i "Y:\HDTV\TV-MOVIE.mpg" -threads 0 -map 0:v -an -c:
+
+
+-x264-params sliced-threads=0 the encode time can be as low as 2ms

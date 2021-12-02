@@ -1,0 +1,4 @@
+C:\Users\Elad\Desktop\ffmpeg_pic_in_pic_pip>ffmpeg -hide_banner -y -i a.mkv -i b.mp4 -filter_complex "[0:v]scale=25
+60:1440[a]; [a]mpdecimate,setpts=N/FRAME_RATE/TB[a]; [1:v]mpdecimate,setpts=N/FRAME_RATE/TB[b]; [a][b]overlay,setpt
+s=PTS-STARTPTS[c]; [c]mpdecimate,setpts=N/FRAME_RATE/TB[c]" -map "[c]" -preset veryslow -crf 21 -tune zerolatency -
+pix_fmt yuv420p -movflags "+faststart" -t 5 multiple_input_6grid.avi

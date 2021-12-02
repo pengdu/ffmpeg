@@ -1,0 +1,245 @@
+1. download the '.m3u8' file to desktop, using additional cookie-header (used for authentication).
+
+C:\Users\Elad\Desktop>aria2c.cmd --header "Cookie: Ccookie=0x4757d68da0f4fdbe61728dffef9933111c54533176733683b5db3773f3a985d3&?ctoken=&str=1589376244&exp=1589377444" "https://reshet-vod-il.ctedgecdn.net/reshet-vod/_definst_/amlst:mediaroot/nana10/media/iiscdn/2020/05/13/news-haolam-haboker-season-01-clips-406-part-05_,550,850,1400,.mp4/chunklist_b1400000.m3u8"
+
+2. the '.m3u8' looks like this:
+
+#EXTM3U
+#EXT-X-VERSION:3
+#EXT-X-TARGETDURATION:12
+#EXT-X-MEDIA-SEQUENCE:0
+#EXTINF:10.0,
+media_b1400000_0.ts
+#EXTINF:10.0,
+media_b1400000_1.ts
+#EXTINF:10.0,
+media_b1400000_2.ts
+#EXTINF:10.0,
+media_b1400000_3.ts
+#EXTINF:10.0,
+media_b1400000_4.ts
+#EXTINF:10.0,
+media_b1400000_5.ts
+#EXTINF:10.0,
+media_b1400000_6.ts
+#EXTINF:10.0,
+media_b1400000_7.ts
+#EXTINF:10.0,
+media_b1400000_8.ts
+#EXTINF:11.12,
+media_b1400000_9.ts
+#EXTINF:10.0,
+media_b1400000_10.ts
+#EXTINF:10.0,
+media_b1400000_11.ts
+#EXTINF:10.0,
+media_b1400000_12.ts
+#EXTINF:10.0,
+media_b1400000_13.ts
+#EXTINF:10.0,
+media_b1400000_14.ts
+#EXTINF:10.0,
+media_b1400000_15.ts
+#EXTINF:10.0,
+media_b1400000_16.ts
+#EXTINF:10.0,
+media_b1400000_17.ts
+#EXTINF:10.0,
+media_b1400000_18.ts
+#EXTINF:10.0,
+media_b1400000_19.ts
+#EXTINF:10.0,
+media_b1400000_20.ts
+#EXTINF:10.0,
+media_b1400000_21.ts
+#EXTINF:10.0,
+media_b1400000_22.ts
+#EXTINF:10.0,
+media_b1400000_23.ts
+#EXTINF:10.0,
+media_b1400000_24.ts
+#EXTINF:10.0,
+media_b1400000_25.ts
+#EXTINF:10.0,
+media_b1400000_26.ts
+#EXTINF:10.0,
+media_b1400000_27.ts
+#EXTINF:10.0,
+media_b1400000_28.ts
+#EXTINF:10.0,
+media_b1400000_29.ts
+#EXTINF:10.0,
+media_b1400000_30.ts
+#EXTINF:10.0,
+media_b1400000_31.ts
+#EXTINF:10.0,
+media_b1400000_32.ts
+#EXTINF:10.0,
+media_b1400000_33.ts
+#EXTINF:10.0,
+media_b1400000_34.ts
+#EXTINF:9.88,
+media_b1400000_35.ts
+#EXTINF:10.0,
+media_b1400000_36.ts
+#EXTINF:10.0,
+media_b1400000_37.ts
+#EXTINF:10.0,
+media_b1400000_38.ts
+#EXTINF:9.64,
+media_b1400000_39.ts
+#EXTINF:10.0,
+media_b1400000_40.ts
+#EXTINF:10.0,
+media_b1400000_41.ts
+#EXTINF:10.0,
+media_b1400000_42.ts
+#EXTINF:10.0,
+media_b1400000_43.ts
+#EXTINF:10.0,
+media_b1400000_44.ts
+#EXTINF:10.0,
+media_b1400000_45.ts
+#EXTINF:10.0,
+media_b1400000_46.ts
+#EXTINF:10.0,
+media_b1400000_47.ts
+#EXTINF:10.0,
+media_b1400000_48.ts
+#EXTINF:10.0,
+media_b1400000_49.ts
+#EXTINF:10.0,
+media_b1400000_50.ts
+#EXTINF:10.0,
+media_b1400000_51.ts
+#EXTINF:10.0,
+media_b1400000_52.ts
+#EXTINF:10.0,
+media_b1400000_53.ts
+#EXTINF:10.0,
+media_b1400000_54.ts
+#EXTINF:10.0,
+media_b1400000_55.ts
+#EXTINF:10.0,
+media_b1400000_56.ts
+#EXTINF:10.0,
+media_b1400000_57.ts
+#EXTINF:10.0,
+media_b1400000_58.ts
+#EXTINF:10.0,
+media_b1400000_59.ts
+#EXTINF:10.0,
+media_b1400000_60.ts
+#EXTINF:9.8,
+media_b1400000_61.ts
+#EXTINF:10.0,
+media_b1400000_62.ts
+#EXTINF:10.0,
+media_b1400000_63.ts
+#EXTINF:10.0,
+media_b1400000_64.ts
+#EXTINF:10.0,
+media_b1400000_65.ts
+#EXTINF:10.0,
+media_b1400000_66.ts
+#EXTINF:11.08,
+media_b1400000_67.ts
+#EXTINF:10.0,
+media_b1400000_68.ts
+#EXTINF:10.0,
+media_b1400000_69.ts
+#EXTINF:10.0,
+media_b1400000_70.ts
+#EXTINF:11.12,
+media_b1400000_71.ts
+#EXTINF:11.12,
+media_b1400000_72.ts
+#EXTINF:10.0,
+media_b1400000_73.ts
+#EXTINF:10.0,
+media_b1400000_74.ts
+#EXTINF:10.0,
+media_b1400000_75.ts
+#EXTINF:10.0,
+media_b1400000_76.ts
+#EXTINF:10.0,
+media_b1400000_77.ts
+#EXTINF:10.0,
+media_b1400000_78.ts
+#EXTINF:10.0,
+media_b1400000_79.ts
+#EXTINF:10.0,
+media_b1400000_80.ts
+#EXTINF:10.0,
+media_b1400000_81.ts
+#EXTINF:10.56,
+media_b1400000_82.ts
+#EXTINF:11.4,
+media_b1400000_83.ts
+#EXTINF:10.0,
+media_b1400000_84.ts
+#EXTINF:10.0,
+media_b1400000_85.ts
+#EXTINF:9.52,
+media_b1400000_86.ts
+#EXTINF:10.0,
+media_b1400000_87.ts
+#EXTINF:10.0,
+media_b1400000_88.ts
+#EXTINF:10.0,
+media_b1400000_89.ts
+#EXTINF:10.0,
+media_b1400000_90.ts
+#EXTINF:10.0,
+media_b1400000_91.ts
+#EXTINF:10.0,
+media_b1400000_92.ts
+#EXTINF:10.0,
+media_b1400000_93.ts
+#EXTINF:9.064,
+media_b1400000_94.ts
+#EXT-X-ENDLIST
+
+
+4. for each line that start with '#EXTINF:' trim the '#EXTINF:' and a float number that comes afterwards and a comman #EXTINF:10.0,' leaving the '.ts' file-name. 
+'#EXTINF:10.0,media_b1400000_93.ts'     ----->>>>>>  media_b1400000_93.ts
+
+the URL to download the '.m3u8' file is: 
+https://reshet-vod-il.ctedgecdn.net/reshet-vod/_definst_/amlst:mediaroot/nana10/media/iiscdn/2020/05/13/news-haolam-haboker-season-01-clips-406-part-05_,550,850,1400,.mp4/chunklist_b1400000.m3u8
+
+the url to download 'media_b1400000_2.ts' (for example) is
+https://reshet-vod-il.ctedgecdn.net/reshet-vod/_definst_/amlst:mediaroot/nana10/media/iiscdn/2020/05/13/news-haolam-haboker-season-01-clips-406-part-05_,550,850,1400,.mp4/media_b1400000_2.ts
+
+which is the same URL as appears in the manifest.
+
+6. write list of just the file names (for future concat when they all be downloaded)
+'concat.txt'
+# concat-list
+file 'media_b1400000_0.ts' 
+...................
+...................
+file 'media_b1400000_93.ts' 
+
+5. write full URLs.
+each line is based on the https://reshet-vod-il.ctedgecdn.net/reshet-vod/_definst_/amlst:mediaroot/nana10/media/iiscdn/2020/05/13/news-haolam-haboker-season-01-clips-406-part-05_,550,850,1400,.mp4/chunklist_b1400000.m3u8
+removing the 'chunklist_b1400000.m3u8' suffix and placing a '.ts' filename instead.
+
+'urls.txt'
+https://reshet-vod-il.ctedgecdn.net/reshet-vod/_definst_/amlst:mediaroot/nana10/media/iiscdn/2020/05/13/news-haolam-haboker-season-01-clips-406-part-05_,550,850,1400,.mp4/media_b1400000_0.ts
+.......................
+.......................
+https://reshet-vod-il.ctedgecdn.net/reshet-vod/_definst_/amlst:mediaroot/nana10/media/iiscdn/2020/05/13/news-haolam-haboker-season-01-clips-406-part-05_,550,850,1400,.mp4/media_b1400000_93.ts
+
+
+7. down its time to download the parts in parallel using aria2c, 
+(instead of ffmpe which downloads each part after the other).
+aria2c.cmd --header="Cookie: Ccookie=0x4757d68da0f4fdbe61728dffef9933111c54533176733683b5db3773f3a985d3&?ctoken=&str=1589376244&exp=1589377444" --input-file="urls.txt" --dir="./"
+
+8. once the download is complete (the exit code of the process is '0'),
+we can delete the 'urls.txt', 
+and concat the '.ts' parts without encoding (just mux'ing them together) using ffmpeg.
+ 
+7. concat list use ffmpeg:
+ffmpeg.exe -y -hide_banner -avoid_negative_ts make_zero -safe "0"  -f concat -i "concat.txt" -codec copy "output.mkv"
+
+8. you can delete the 'concat.txt'

@@ -1,0 +1,17 @@
+no audio
+ffmpeg -i input.mp4 -vcodec rawvideo -an out.avi
+
+wav audio
+ffmpeg -i input.mp4            -vcodec rawvideo  -acodec pcm_s32le  out.avi
+ffmpeg -i input.mp4            -vcodec rawvideo  -acodec pcm_s16le  out.avi
+
+more accurate raw audio (VideoDub can not read this)
+ffmpeg -i input.mp4  -f s16le  -vcodec rawvideo  -acodec pcm_s16le  out.raw
+
+
+
+raw video/audio (70 seconds).
+ffmpeg -threads 16 -i input.mp4 -threads 16 -f s16le  -vcodec rawvideo  -acodec pcm_s16le  -s 70 out.raw
+
+raw video/mp3 audio (70 seconds).
+ffmpeg -threads 16 -i input.mp4 -threads 16 -vcodec rawvideo -t 70 out.avi

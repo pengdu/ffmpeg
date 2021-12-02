@@ -1,0 +1,1 @@
+ffmpeg -i Greensleeves_CBR_128k.mp3 -filter:a "treble=g=-15,bass=g=3:f=110:w=0.6,atempo=2.0,dynaudnorm,atempo=2.0,dynaudnorm" -c:a aac -strict experimental -b:a 192k  g1.m4a

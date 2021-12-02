@@ -1,0 +1,1 @@
+ffmpeg -y -hide_banner -i input.mp3 -filter:a "volume=0.5" -async 1 -vn -tune zerolatency -movflags "+faststart"    "output.mp3"

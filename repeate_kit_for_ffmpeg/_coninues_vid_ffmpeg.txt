@@ -1,0 +1,412 @@
+Using high-accuracy player to identify (manually) the maximum amount of raw/initial v/a stream,
+I'm using 'Subtitle-Wordshop' because I like its keyboard-shortcuts (ctrl+space=play/pause alt+left/right=quick jump).
+
+I've found a nice long-part of the video: from <code>00:01:05.376</code> until <code>00:01:16.077</code>,
+next, we'll going to use FFMPEG to cut this area into a new mp4 file, for that we need the delta, in seconds or in time-string (as above) 
+
+if you don't want to calculate it yourself, you can copy&paste the following code into the developers-panel's console,
+(and feed-in your values of course..)
+
+<pre code-like>
+javascript:(function(zero,base,a,b,c,userin){if(null===userin)return;userin=userin.replace(/\s*/g,"").split("-");a=Number(new Date(base+userin[0]));b=Number(new Date(base+userin[1]));c=new Date(b-a+zero);c=("00"+c.getHours()).substr(-2)+":"+("00"+c.getMinutes()).substr(-2)+":"+("00"+c.getSeconds()).substr(-2)+"."+("000"+c.getMilliseconds()).substr(-3);prompt("☆ RANGE: "+userin.join("→")+"\n"+"∆ DIFF: "+c+"\n",c)})(Number(new Date("2016-01-01 "+"00:00:00.000")),"2016-01-01 ",null,null,null,prompt("FFMPEG Compatible Range2Diff","00:01:05.376-00:01:16.077"));
+
+the delta came out as <code>00:00:10.701</code>
+
+Now.. you may cut quickly (will take about ~1 second) using:
+<pre code-like>
+ffmpeg -i input.mp4 -threads 16 -vcodec copy -acodec copy -sn -ss 00:01:05.376 -t 00:00:10.701 out.mp4
+</pre>
+
+but you might loose audio sync and few frames in the process,
+
+since this can be consider a "raw source", and the total-time is tiny, as long we'll be using some smart switches we can-keep audio and video sync, and high-quality end result,
+
+<pre code-like>
+call ffmpeg.exe -y                                                                     ^
+-hide_banner -loglevel "info" -stats                                                   ^
+-i  "input.mp4"                                                                        ^
+-threads 16                                                                            ^
+-flags     "-loop+naq+low_delay"                                                       ^
+-flags2    "+fast+ignorecrop+showall+export_mvs"                                       ^
+-fflags    "+genpts+discardcorrupt+fastseek"                                           ^
+-movflags  "+faststart"                                                                ^
+-tune      "zerolatency"                                                               ^
+-pix_fmt   "yuv420p"                                                                   ^
+-profile:v "high" -level "5.0"                                                         ^
+ ^
+-x264opts  "keyint=4" -g "2" -forced-idr "true" -refs "25" -rc-lookahead "25"          ^
+-preset    "veryslow" -crf "23" -subq "9" -qcomp "0.60"                                ^
+ ^
+-ss        "00:00:00.001"                                                              ^
+-af        "asetpts=PTS-STARTPTS,aresample=async=1:min_hard_comp=0.100000" -vsync "1"  ^
+-vf        "setpts=PTS-STARTPTS,yadif=0:-1:0,dejudder=cycle=20,mpdecimate,fps=fps=25,setpts=N/FRAME_RATE/TB-STARTPTS,format=pix_fmts=yuv420p"   ^
+-map_metadata "-1"                                                                     ^
+-sn -ss 00:01:05.376 -t 00:00:10.701                                                   ^
+out.mp4
+</pre>
+
+the command-line is a bit-lengthy, since it propely de-interlace the video-frames and elegantly cure double-framing, while still try to keep the v/a in-sync :)
+still took only about 1 minute to finish executing :]
+
+Now, there is a quite hard, repetitive process of trying to make the audio repeate without it looking jumpy or weird,
+it is quite hard since you have to do it all by yourself, manually,
+and it is crutial to pick, at the first stage (above) a long-enough, good-quality video,
+that can be aligned upon itself,
+again- without make it look or heard to jumpy or weird,
+for that you <del>might</del> WOULD need to repeate the about process of cutting from the "raw source" with literately (not figuratively!) milliseconds of accuracy, 
+
+while respecting the initial "borders" of <code>00:01:05.376 -to- 00:01:16.077</code>, 
+you can make the video start later (for example <code>00:01:05.500</code>)
+- NOTE that you have to calculate <code>00:01:05.500-00:01:16.077</code> delta-duration, AGAIN!!
+AND/OR - trim out of the end of the video, which is easier (since you keep the starting point, and don't have to re-calc anything, so if you're lazy try it first..)
+
+
+but first lets align couple of videos start-end-start-end...
+
+prepare a small text file named 'streams.txt' with this content:
+# testing good quality repeat
+# ---------------------------------
+file 'c:/users/elad/desktop/out.mp4'
+file 'c:/users/elad/desktop/out.mp4'
+file 'c:/users/elad/desktop/out.mp4'
+# ---------------------------------
+
+-- the file's-path must be absolute (even if you run the whole-thing from the same folder..)
+-- instead of <code>\</code> use <code>/</code>.
+-- wrap the path with <code>'</code> character
+-- if you see 'file-name' unsafe, set safe to <code>0</code>, to allow processing every type of file. (use <code>-safe "0"</code> before the <code>-i ....</code> part)
+-- the file may be ASCII or UTF-8/Unicode encoded (if required due to file names, but better keep it simple!), if you run FFMPEG on Windows, make sure it the EOL is Windows' style (CR+LF) - you can use notepad++/notepad2 for that.
+
+for a quick "feel", we'll use stream-copy (faster!) the command 
+`ffmpeg -safe 0 -f concat -i "streams.txt" -threads 16 -vcodec copy -acodec copy  "out_repeat.mp4"`
+
+------
+tip: You may use new subtitle file named <code>input.srt</code> at the same folder as <code>input.mp4</code>, double clicking the <code>input.srt</code> will quickly open the Subtitle-Workshop program, you can then double click the first subtitle to quickly jump the the start-point,
+it is just a "shortcut", we don't need the subtitle itself or its content in any-way..
+
+--- it should be UTF-8 without BOM, Windows EOL, with two empty lines at its end,
+the milliseconds are sapareted by comma, not dot!  - like so:
+<pre code-like>
+1
+00:01:05,376 --> 00:01:16,077
+hello...
+
+
+</pre>
+
+
+--------------
+to make things faster, concat the following commands into a single file named 'run.cmd' and save it at the same folder as 'input.mp4':
+
+<pre code-like>
+@echo off
+call ffmpeg.exe -y                                                                     ^
+-hide_banner -loglevel "info" -stats                                                   ^
+-ss 00:01:05.0                                                                         ^
+-i  "input.mp4"                                                                        ^
+-threads 16                                                                            ^
+-flags     "-loop+naq+low_delay"                                                       ^
+-flags2    "+fast+ignorecrop+showall+export_mvs"                                       ^
+-fflags    "+genpts+discardcorrupt+fastseek"                                           ^
+-movflags  "+faststart"                                                                ^
+-tune      "zerolatency"                                                               ^
+-pix_fmt   "yuv420p"                                                                   ^
+-profile:v "high" -level "5.0"                                                         ^
+ ^
+-x264opts  "keyint=4" -g "2" -forced-idr "true" -refs "25" -rc-lookahead "25"          ^
+-preset    "ultrafast" -crf "1" -subq "9" -qcomp "0.60"                                ^
+ ^
+-af        "asetpts=PTS-STARTPTS,aresample=async=1:min_hard_comp=0.100000" -vsync "1"  ^
+-vf        "setpts=PTS-STARTPTS,yadif=0:-1:0,dejudder=cycle=20,mpdecimate,fps=fps=25,setpts=N/FRAME_RATE/TB-STARTPTS,format=pix_fmts=yuv420p"   ^
+-map_metadata "-1"                                                                     ^
+-sn -ss 00:00:00.376 -t 00:00:10.701                                                   ^
+out.mp4
+
+
+ffmpeg -safe 0 -f concat -i "streams.txt" -threads 16 -vcodec copy -acodec copy  "out_repeat.mp4"
+
+pause
+pause
+</pre>
+
+tricks:
+notice we've changes the preset to <code>ultrafast</code>, and the crf to 1 (almost lossless but not! since 0 will change the processing of the video..),
+to make seeking faster I've moved the most of the seeking before the <code>-i ... </code> and the milliseconds, after it..
+
+later we could make things more efficient...
+
+now, all left to do is to, painfully, trim milliseconds away from the delta-duration number in the <code>-t</code> part of the command, save and execute the 'cmd' file, and check the "out_repeat.mp4" result.
+
+keep the <code>"pause, pause" for quick debug..</code>
+
+TRYING:
+<code>00:01:05.376-00:01:14.752   ---   -ss 00:01:05.376 -t 00:00:09.376</code>
+<pre code-like>
+@echo off
+call ffmpeg.exe -y                                                                     ^
+-hide_banner -loglevel "info" -stats                                                   ^
+-ss 00:01:05.0                                                                         ^
+-i  "input.mp4"                                                                        ^
+-threads 16                                                                            ^
+-flags     "-loop+naq+low_delay"                                                       ^
+-flags2    "+fast+ignorecrop+showall+export_mvs"                                       ^
+-fflags    "+genpts+discardcorrupt+fastseek"                                           ^
+-movflags  "+faststart"                                                                ^
+-tune      "zerolatency"                                                               ^
+-pix_fmt   "yuv420p"                                                                   ^
+-profile:v "high" -level "5.0"                                                         ^
+ ^
+-x264opts  "keyint=4" -g "2" -forced-idr "true" -refs "25" -rc-lookahead "25"          ^
+-preset    "ultrafast" -crf "1" -subq "9" -qcomp "0.60"                                ^
+ ^
+-af        "asetpts=PTS-STARTPTS,aresample=async=1:min_hard_comp=0.100000" -vsync "1"  ^
+-vf        "setpts=PTS-STARTPTS,yadif=0:-1:0,dejudder=cycle=20,mpdecimate,fps=fps=25,setpts=N/FRAME_RATE/TB-STARTPTS,format=pix_fmts=yuv420p"   ^
+-map_metadata "-1"                                                                     ^
+-sn -ss 00:00:00.376 -t 00:00:09.376                                                   ^
+out.mp4
+
+
+ffmpeg -safe 0 -y -hide_banner -loglevel "info" -stats -f concat -i "streams.txt" -threads 16 -vcodec copy -acodec copy  "out_repeat.mp4"
+
+pause
+pause
+</pre>
+
+-- <code>00:09:376</code> to <code>00:08.777</code>
+-- <code>00:08.777</code> to <code>00:08.100</code>
+nope. too much!
+-- <code>00:08.777</code> to <code>00:08.200</code>
+still. too much!
+-- <code>00:08.777</code> to <code>00:08.500</code>
+almost!. still too much!
+-- <code>00:08.777</code> to <code>00:08.550</code>
+very close!
+-- <code>00:08.777</code> to <code>00:08.565</code>
+
+to increase accuracy (at a price of speed) I've changed 
+<code>-fflags "+genpts+discardcorrupt+fastseek"</code> to <code>-fflags "+genpts+discardcorrupt-fastseek"</code>
+
+very close!
+-- <code>00:08.777</code> to <code>00:08.585</code>
+
+finally <code>.573</code> was the best visual and audio sync result, but now it is time to test it with full encode process so the 'out.mp4' can stay (for now) with the speed tricks, but `ffmpeg -safe 0 -y -hide_banner -loglevel "info" -stats -f concat -i "streams.txt" -threads 16 -vcodec copy -acodec copy  "out_repeat.mp4"`
+
+will be transform to 
+<pre code>
+call ffmpeg.exe -y                                                                     ^
+-hide_banner -loglevel "info" -stats                                                   ^
+-f concat -i "streams.txt"                                                             ^
+-threads 16                                                                            ^
+-flags     "-loop+naq+low_delay"                                                       ^
+-flags2    "+fast+ignorecrop+showall+export_mvs"                                       ^
+-fflags    "+genpts+discardcorrupt-fastseek"                                           ^
+-movflags  "+faststart"                                                                ^
+-tune      "zerolatency"                                                               ^
+-pix_fmt   "yuv420p"                                                                   ^
+-profile:v "high" -level "5.0"                                                         ^
+ ^
+-x264opts  "keyint=4" -g "2" -forced-idr "true" -refs "25" -rc-lookahead "25"          ^
+-preset    "ultrafast" -crf "1" -subq "9" -qcomp "0.60"                                ^
+ ^
+-af        "asetpts=PTS-STARTPTS,aresample=async=1:min_hard_comp=0.100000" -vsync "1"  ^
+-vf        "setpts=PTS-STARTPTS,yadif=0:-1:0,dejudder=cycle=20,mpdecimate,fps=fps=25,setpts=N/FRAME_RATE/TB-STARTPTS,format=pix_fmts=yuv420p"   ^
+-map_metadata "-1"                                                                     ^
+out_repeat.mp4
+</pre>
+
+so the complete 'cmd' file name is now:
+
+<pre code-like>
+@echo off
+call ffmpeg.exe -y                                                                     ^
+-hide_banner -loglevel "info" -stats                                                   ^
+-ss 00:01:05.0                                                                         ^
+-i  "input.mp4"                                                                        ^
+-threads 16                                                                            ^
+-flags     "-loop+naq+low_delay"                                                       ^
+-flags2    "+fast+ignorecrop+showall+export_mvs"                                       ^
+-fflags    "+genpts+discardcorrupt-fastseek"                                           ^
+-movflags  "+faststart"                                                                ^
+-tune      "zerolatency"                                                               ^
+-pix_fmt   "yuv420p"                                                                   ^
+-profile:v "high" -level "5.0"                                                         ^
+ ^
+-x264opts  "keyint=4" -g "2" -forced-idr "true" -refs "25" -rc-lookahead "25"          ^
+-preset    "ultrafast" -crf "1" -subq "9" -qcomp "0.60"                                ^
+ ^
+-af        "asetpts=PTS-STARTPTS,aresample=async=1:min_hard_comp=0.100000" -vsync "1"  ^
+-vf        "setpts=PTS-STARTPTS,yadif=0:-1:0,dejudder=cycle=20,mpdecimate,fps=fps=25,setpts=N/FRAME_RATE/TB-STARTPTS,format=pix_fmts=yuv420p"   ^
+-map_metadata "-1"                                                                     ^
+-sn -ss 00:00:00.376 -t 00:00:08.573                                                   ^
+out.mp4
+
+
+::ffmpeg -safe 0 -y -hide_banner -loglevel "info" -stats -f concat -i "streams.txt" -threads 16 -vcodec copy -acodec copy  "out_repeat.mp4"
+
+
+call ffmpeg.exe  -y -safe "0"                                                          ^
+-hide_banner -loglevel "info" -stats                                                   ^
+-f "concat" -i "streams.txt"                                                           ^
+-threads 16                                                                            ^
+-flags     "-loop+naq+low_delay"                                                       ^
+-flags2    "+fast+ignorecrop+showall+export_mvs"                                       ^
+-fflags    "+genpts+discardcorrupt-fastseek"                                           ^
+-movflags  "+faststart"                                                                ^
+-tune      "zerolatency"                                                               ^
+-pix_fmt   "yuv420p"                                                                   ^
+-profile:v "high" -level "5.0"                                                         ^
+ ^
+-x264opts  "keyint=4" -g "2" -forced-idr "true" -refs "25" -rc-lookahead "25"          ^
+-preset    "ultrafast" -crf "1" -subq "9" -qcomp "0.60"                                ^
+ ^
+-af        "asetpts=PTS-STARTPTS,aresample=async=1:min_hard_comp=0.100000" -vsync "1"  ^
+-vf        "setpts=PTS-STARTPTS,yadif=0:-1:0,dejudder=cycle=20,mpdecimate,fps=fps=25,setpts=N/FRAME_RATE/TB-STARTPTS,format=pix_fmts=yuv420p"   ^
+-map_metadata "-1"                                                                     ^
+out_repeat.mp4
+
+pause
+pause
+</pre>
+
+we've just doing 'concat' for two files, still testing..
+
+since it is "full processing" the timing might be changed (slightly- <code>.573</code> to <code>.572</code> in this case..) again while there is internal convertion/readout of the stream as 'mp4toannexb bitstream' ("Auto-inserting h264_mp4toannexb bitstream filterx")
+
+
+<hr/>
+
+math time..
+
+creating a 1/2/.../10 hours video is a matter of multiplication the duration of the single video, 
+for example, <code>8</code> seconds currently..
+
+start with 1 hour.. 
+1 hour is 60 minutes, or 3600 seconds, which are 3600/8 === x450 times of the video,
+
+for accuracy... the video's duration is actually 8.596 which is slightly like 8.600 which are about 8600 milliseconds..
+3600 seconds are 3600000 / 8600 are 418 times the movie... round it up to 420...
+
+so in-order to make a 1-hour video, we have to make a text file with 420 lines (copied over and over)
+easy enough use notepad2 and ctrl+d to fast duplicate a single line, and once you have enough, start copy&paste&copy&paste... :)
+
+<hr/>
+
+* the 1 hour long 'cmd' file is quite similar to the previous "two files concat" "cmd file",
+other than changed the name of txt file feeding it to the second command, it practically the same..
+
+
+'25fpssync_cut_x1hour.cmd':
+<pre code-like>
+@echo off
+call ffmpeg.exe -y                                                                     ^
+-hide_banner -loglevel "info" -stats                                                   ^
+-ss 00:01:05.0                                                                         ^
+-i  "input.mp4"                                                                        ^
+-threads 16                                                                            ^
+-flags     "-loop+naq+low_delay"                                                       ^
+-flags2    "+fast+ignorecrop+showall+export_mvs"                                       ^
+-fflags    "+genpts+discardcorrupt-fastseek"                                           ^
+-movflags  "+faststart"                                                                ^
+-tune      "zerolatency"                                                               ^
+-pix_fmt   "yuv420p"                                                                   ^
+-profile:v "high" -level "5.0"                                                         ^
+ ^
+-x264opts  "keyint=4" -g "2" -forced-idr "true" -refs "25" -rc-lookahead "25"          ^
+-preset    "ultrafast" -crf "1" -subq "9" -qcomp "0.60"                                ^
+ ^
+-af        "asetpts=PTS-STARTPTS,aresample=async=1:min_hard_comp=0.100000" -vsync "1"  ^
+-vf        "setpts=PTS-STARTPTS,yadif=0:-1:0,dejudder=cycle=20,mpdecimate,fps=fps=25,setpts=N/FRAME_RATE/TB-STARTPTS,format=pix_fmts=yuv420p"   ^
+-map_metadata "-1"                                                                     ^
+-sn -ss 00:00:00.376 -t 00:00:08.572                                                   ^
+out.mp4
+
+
+::ffmpeg -safe 0 -y -hide_banner -loglevel "info" -stats -f concat -i "streams.txt" -threads 16 -vcodec copy -acodec copy  "out_repeat.mp4"
+
+
+call ffmpeg.exe  -y -safe "0"                                                          ^
+-hide_banner -loglevel "info" -stats                                                   ^
+-f "concat" -i "streams_1hour.txt"                                                           ^
+-threads 16                                                                            ^
+-flags     "-loop+naq+low_delay"                                                       ^
+-flags2    "+fast+ignorecrop+showall+export_mvs"                                       ^
+-fflags    "+genpts+discardcorrupt-fastseek"                                           ^
+-movflags  "+faststart"                                                                ^
+-tune      "zerolatency"                                                               ^
+-pix_fmt   "yuv420p"                                                                   ^
+-profile:v "high" -level "5.0"                                                         ^
+ ^
+-x264opts  "keyint=4" -g "2" -forced-idr "true" -refs "25" -rc-lookahead "25"          ^
+-preset    "ultrafast" -crf "1" -subq "9" -qcomp "0.60"                                ^
+ ^
+-af        "asetpts=PTS-STARTPTS,aresample=async=1:min_hard_comp=0.100000" -vsync "1"  ^
+-vf        "setpts=PTS-STARTPTS,yadif=0:-1:0,dejudder=cycle=20,mpdecimate,fps=fps=25,setpts=N/FRAME_RATE/TB-STARTPTS,format=pix_fmts=yuv420p"   ^
+-map_metadata "-1"                                                                     ^
+out_repeat.mp4
+
+pause
+pause
+</pre>
+
+we don't care too much about compression so crf and preset switches don't have extream processing set on at all..
+
+anyway...
+let it run, it won't show you too much of a progress but it will take time, there are filters processing the video/audio improving the output and fixing bad-framing.. 
+
+without compressing.. about 2 minutes are 2 giga.. :/
+
+it is also very slow, lets try to concat the first file, and then, to fix the 1 hour file,
+<pre code-like>
+@echo off
+call ffmpeg.exe -y                                                                     ^
+-hide_banner -loglevel "info" -stats                                                   ^
+-ss 00:01:05.0                                                                         ^
+-i  "input.mp4"                                                                        ^
+-threads 16                                                                            ^
+-flags     "-loop+naq+low_delay"                                                       ^
+-flags2    "+fast+ignorecrop+showall+export_mvs"                                       ^
+-fflags    "+genpts+discardcorrupt-fastseek"                                           ^
+-movflags  "+faststart"                                                                ^
+-tune      "zerolatency"                                                               ^
+-pix_fmt   "yuv420p"                                                                   ^
+-profile:v "high" -level "5.0"                                                         ^
+ ^
+-x264opts  "keyint=4" -g "2" -forced-idr "true" -refs "25" -rc-lookahead "25"          ^
+-preset    "ultrafast" -crf "1" -subq "9" -qcomp "0.60"                                ^
+ ^
+-af        "asetpts=PTS-STARTPTS,aresample=async=1:min_hard_comp=0.100000" -vsync "1"  ^
+-vf        "setpts=PTS-STARTPTS,yadif=0:-1:0,dejudder=cycle=20,mpdecimate,fps=fps=25,setpts=N/FRAME_RATE/TB-STARTPTS,format=pix_fmts=yuv420p"   ^
+-map_metadata "-1"                                                                     ^
+-sn -ss 00:00:00.376 -t 00:00:08.572                                                   ^
+out.mp4
+
+
+ffmpeg -y -hide_banner -loglevel "info" -stats -safe "0" -f concat -i "streams_1hour.txt" -threads 16 -vcodec copy -acodec copy  "out_repeat.mp4"
+
+
+call ffmpeg.exe -safe "0" -y                                                           ^
+-hide_banner -loglevel "info" -stats                                                   ^
+-i  "out_repeat.mp4"                                                                   ^
+-threads 16                                                                            ^
+-flags     "-loop+naq+low_delay"                                                       ^
+-flags2    "+fast+ignorecrop+showall+export_mvs"                                       ^
+-fflags    "+genpts+discardcorrupt-fastseek"                                           ^
+-movflags  "+faststart"                                                                ^
+-tune      "zerolatency"                                                               ^
+-pix_fmt   "yuv420p"                                                                   ^
+-profile:v "high" -level "5.0"                                                         ^
+ ^
+-ss 00:00:00.005                                                                       ^
+-x264opts  "keyint=4" -g "2" -forced-idr "true" -refs "25" -rc-lookahead "25"          ^
+-preset    "ultrafast" -crf "1" -subq "9" -qcomp "0.60"                                ^
+ ^
+-af        "asetpts=PTS-STARTPTS,aresample=async=1:min_hard_comp=0.100000" -vsync "1"  ^
+-vf        "setpts=PTS-STARTPTS,yadif=0:-1:0,dejudder=cycle=20,mpdecimate,fps=fps=25,setpts=N/FRAME_RATE/TB-STARTPTS,format=pix_fmts=yuv420p"   ^
+-map_metadata "-1"                                                                     ^
+out_repeat_1hour.mp4
+
+pause
+pause
+</pre>
+
+it is far more time efficient but the audio/video might get out out sync due to frames that are put before the first video/audio-frames... :/

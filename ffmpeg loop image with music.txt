@@ -1,0 +1,4 @@
+ffmpeg -i audio.mp3 -f image2 -loop 1 -i logo.jpg 
+-r 15 -s 640x480 \
+-c:v libx264 -crf 18 -tune stillimage -preset medium \
+-shortest foo.mov

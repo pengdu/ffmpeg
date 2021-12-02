@@ -1,0 +1,75 @@
+output the bitrate (in "bit" which is 1000 now not 1024 on newer FFMPEGs)
+
+ffprobe -v "error" -hide_banner -i "D:\Software\ffmpeg\20160629_012932.mp4" -select_streams "v:0" -show_entries "stream=bit_rate" -print_format "default=noprint_wrappers=1:nokey=1"
+
+
+
+
+
+
+
+D:\Software\ffmpeg>set /a aa=48015064/1024
+46889
+D:\Software\ffmpeg>set /a aa=48015064/1000
+48015
+D:\Software\ffmpeg>
+
+
+
+
+
+
+
+
+
+D:\Software\ffmpeg>ffprobe -i "D:\Software\ffmpeg\20160629_012932.mp4" -select_streams "v:0" -show_entries "stream=bit_rate" -print_format "default=noprint_wrappers=1:nokey=1"
+Input #0, mov,mp4,m4a,3gp,3g2,mj2, from 'D:\Software\ffmpeg\20160629_012932.mp4':
+  Metadata:
+    major_brand     : mp42
+    minor_version   : 0
+    compatible_brands: isommp42
+    creation_time   : 2016-06-28 22:34:31
+  Duration: 00:04:57.77, start: 0.000000, bitrate: 48262 kb/s
+    Stream #0:0(eng): Video: h264 (High) (avc1 / 0x31637661), yuv420p, 3840x2160, 48015 kb/s, 30.01 fps, 30 tbr, 90k tbn, 180k tbc (default)
+    Metadata:
+      rotate          : 180
+      creation_time   : 2016-06-28 22:34:31
+      handler_name    : VideoHandle
+    Side data:
+      displaymatrix: rotation of -180.00 degrees
+    Stream #0:1(eng): Audio: aac (LC) (mp4a / 0x6134706D), 48000 Hz, stereo, fltp, 256 kb/s (default)
+    Metadata:
+      creation_time   : 2016-06-28 22:34:31
+      handler_name    : SoundHandle
+48015064
+
+D:\Software\ffmpeg>ffprobe -v "error" -hide_banner -i "D:\Software\ffmpeg\20160629_012932.mp4" -select_streams "v:0" -show_entries "stream=bit_rate" -print_format "default=noprint_wrappers=1:nokey=1"
+48015064
+
+D:\Software\ffmpeg>ffprobe -v "error" -hide_banner -i "D:\Software\ffmpeg\20160629_012932.mp4" -select_streams "v:0" -show_entries "stream=bit_rate" -print_format "default=noprint_wrappers=1:nokey=1"
+D:\Software\ffmpeg>set /a aa=48015064/1024
+46889
+D:\Software\ffmpeg>set /a aa=48015064/1000
+48015
+D:\Software\ffmpeg>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

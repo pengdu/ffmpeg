@@ -1,0 +1,8 @@
+ffmpeg -i video.mp4 -i audio.mp3 -shortest output.mp4
+ffmpeg -i video.mp4 -i audio.mp3 -map 0:0 -map 1:0 -shortest output.mp4
+
+ffmpeg -i 20160509_221713_noaudio_hyperlapse_10x_std_noaudio.mp4 -i music.mp3 -shortest 20160509_221713_noaudio_hyperlapse_10x_std_music.mp4
+20160515_0752371_hyperlapse_10x_std.mp4
+
+
+ffmpeg -threads 8 -i 20160515_0752371_hyperlapse_10x_std.mp4 -i music2.mp3 -map 0:0 -map 1:0 -shortest output.mp4

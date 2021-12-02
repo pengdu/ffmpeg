@@ -1,0 +1,71 @@
+ffmpeg -i video.mp4 -vf "ass=subtitle.ass" out_video.mp4
+ffmpeg -hide_banner -y -i "video.mp4" -filter_complex "[0:v]ass=subtitle.ass[VIDEO];" -map "[VIDEO]" out_video.mp4
+
+----------------------------------------------------------------
+----------------------------------------------------------------
+
+1. Save as `.ass` (Advanced SubStation Alpha).
+
+2. Open (Notepad2) - File→Encoding→UTF-8.
+
+3. replace:
+Format: Name, Fontname, Fontsize, PrimaryColour, SecondaryColour, OutlineColour, BackColour, Bold, Italic, Underline, StrikeOut, ScaleX, ScaleY, Spacing, Angle, BorderStyle, Outline, Shadow, Alignment, MarginL, MarginR, MarginV, Encoding
+Style: Default,Tahoma,24,&H00FFFFFF,&H00FFFFFF,&H00FFFFFF,&H00C0C0C0,-1,0,0,0,100,100,0,0.00,1,2,3,2,20,20,20,1
+   with:
+Format: Name, Fontname, Fontsize, PrimaryColour, SecondaryColour, OutlineColour, BackColour, Bold, Italic, Underline, StrikeOut, ScaleX, ScaleY, Spacing, Angle, BorderStyle, Outline, Shadow, Alignment, MarginL, MarginR, MarginV, Encoding
+Style: Default,Tahoma,22,&H00FFFFFF,&H00FFFFFF,&H00000000,&H00000000,-1,0,0,0,100,100,0,0,1,1,0,2,10,10,20,1
+
+4.
+ffmpeg -i video.mp4 -vf "ass=subtitle.ass" out_video.mp4
+ffmpeg -hide_banner -y -i "video.mp4" -filter_complex "[0:v]ass=subtitle.ass[VIDEO];" -map "[VIDEO]" -preset veryslow -crf 21 -pix_fmt yuv420p -movflags "+faststart" out_video.mp4 (advance filtering example).
+
+(or)
+ffmpeg -hide_banner -y -threads "8" -strict "experimental" -i "video.mkv" -flags "+naq+low_delay+global_header-unaligned-ilme-cgop-loop-output_corrupt" -flags2 "+fast+ignorecrop+showall+export_mvs" -fflags "+ignidx+genpts+nofillin+discardcorrupt-fastseek" -movflags "+faststart+disable_chpl" -avoid_negative_ts "make_zero" -tune "zerolatency" -ignore_unknown -ss "00:00:01.001" -map_chapters "-1" -map_metadata "-1" -sn -vf "ass=video.ass,scale=1280:720" -preset "veryfast" -crf 21 -pix_fmt "yuv420p" -movflags "+faststart" -profile:v "baseline" -level "3.0" video.mp4
+
+
+
+------------------------------------------------------------------------
+
+
+
+5. want to chop a video with '-ss' ?
+   putting '-ss' before the '-i' to speed up the processing will mess up the subtitle timing! (bug..)
+   you can either put '-ss' exclusively after the '-i' (slow processing... :| ).
+   or encode the whole video and then chop it.
+
+  this (for example WILL NOT WORK):
+    ffmpeg -hide_banner -y -ss "00:34:40.000" -i "vid.mp4" -ss "00:00:01.917" -to "00:37:11.196" -sn -vf "ass=sub.ass" -preset "veryfast" -crf 21 -pix_fmt "yuv420p" -profile:v "baseline" -level "3.0" out.mp4
+
+
+
+
+------------------------------------------------------------------------
+
+
+
+
+ffmpeg -i "video.mp4" -threads 16 -vf "ass=subtitle.ass"  out.mp4
+
+
+ffmpeg -hide_banner -y -i "House.S03E14.DVDRip.XviD-TOPAZ.mp4" -bt 50M -profile:v "baseline" -level "3.0" -filter_complex "[0:v]ass=subtitle.ass[a]; [a]mpdecimate,setpts=N/FRAME_RATE/TB[a]" -map "[a]" -vsync 2 -async 1 -preset veryslow -crf 21 -tune zerolatency -pix_fmt yuv420p -movflags "+faststart" -t 10 -framerate 25 -acodec copy output.mp4
+
+
+
+
+full
+
+ffmpeg -y -hide_banner -i "o.mp4" -profile:v "baseline" -level "3.0" -bt 50M -vf "mpdecimate,setpts=N/FRAME_RATE/TB" -preset veryslow -crf 21 -vsync 2 -async 1 -tune zerolatency -movflags "+faststart" -pix_fmt yuv420p "output.mp4"
+
+
+no async
+
+ffmpeg -y -hide_banner -ss 00:00:05.000 -i "o.mp4" -profile:v "baseline" -level "3.0" -bt 50M -vf "mpdecimate,setpts=N/FRAME_RATE/TB" -preset veryslow -crf 21 -tune zerolatency -movflags "+faststart" -pix_fmt yuv420p -t 10 "output.mp4"
+
+
+no async constant bit rate
+
+ffmpeg -y -hide_banner -ss 00:00:05.000 -i "o.mp4" -r 15 -profile:v "baseline" -level "3.0" -bt 50M -vf "mpdecimate,setpts=N/FRAME_RATE/TB" -preset veryslow -crf 21 -tune zerolatency -movflags "+faststart" -pix_fmt yuv420p -t 10 "output.mp4"
+
+
+
+

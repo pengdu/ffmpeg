@@ -1,0 +1,54 @@
+first, finish all editing using 'subtitle workshop' program while the file is encoded as ANSI(1255),
+then save the file and exit 'subtitle workshop' program (save as srt, for example),
+open the file in 'notepad2' program and select the encoding 'UTF-8' (without BOM),
+next - you can use ffmpeg with either 'subtitles' filter (or older 'ass' filter).
+
+------------------------------------------------------------------------------------------
+------------------------------------------------------------------------------------------
+
+
+-ss "00:28:15.360" -to "00:31:49.764"
+
+
+ffmpeg -y -i "Mary Poppins 1964.mp4" -preset veryslow -ss "00:28:15.360" -to "00:03:34.764" -vf "ass=subtitle.ass,scale=-2:360" "out_video.mp4"
+
+ffmpeg -y -ss "00:28:15.000" -i "Mary Poppins 1964.mp4" -preset veryslow -ss "00:00:00.360" -to "00:03:34.764" -vf "ass=subtitle.ass,scale=-2:360" "out_video.mp4"
+
+ffmpeg -y -ss "00:28:15.000" -i "Mary Poppins 1964.mp4" -codec copy -ss "00:00:00.360" -to "00:03:34.764" "out.mp4"
+
+ffmpeg -y -i "out.mp4" -preset veryslow -vf "ass=out.ass,scale=-2:360" "out_subtitle.mp4"
+
+
+
+
+--------------
+FC_CONFIG_FILE= C:\ffmpeg\fonts.conf and FC_CONFIG_DIR= C:\ffmpeg\
+
+FC_CONFIG_DIR=C:\Program Files\ffmpeg
+FONTCONFIG_FILE=fonts.conf
+FONTCONFIG_PATH=C:\Program Files\ffmpeg
+
+FC_CONFIG_DIR=C:\Program Files\ffmpeg
+FONTCONFIG_FILE=fonts.conf
+FONTCONFIG_PATH=C:\Program Files\ffmpeg
+
+
+
+ffmpeg -y -ss "00:11:00.000" -i "Mary Poppins 1964.mp4" -ss "00:00:22.963" -to "00:00:30.00" -vf "fifo,setpts=PTS-STARTPTS,subtitles=filename='Mary Poppins 1964.srt':force_style='Fontsize=28 Shadow=9'" -acodec "copy" out.mp4
+
+
+ffmpeg -y -i "Mary Poppins 1964.mp4" -ss "00:11:22.963" -to "00:11:30.00" -preset veryslow -accurate_seek -vf "fifo,setpts=PTS-STARTPTS,format=pix_fmts=yuv420p,scale=-2:360,subtitles=filename='Mary Poppins 1964.srt':force_style='Fontname=Tahoma,Fontsize=30,Shadow=1'" -acodec copy  out.mp4
+
+ffmpeg -y -accurate_seek -i "Mary Poppins 1964.mp4" -ss "00:28:15.360" -to "00:31:49.764" -preset veryslow -vf "fifo,setpts=PTS-STARTPTS,format=pix_fmts=yuv420p,scale=-2:360,subtitles=filename='Mary Poppins 1964.srt':force_style='Fontname=Tahoma,Fontsize=28,Shadow=1'" -acodec copy  out.mp4
+
+
+
+set "ARGS="
+set  ARGS=%ARGS% -y -accurate_seek -i "input.mp4" -preset veryslow -acodec copy
+set  ARGS=%ARGS% -ss "00:28:15.360" -to "00:31:49.764"
+set  ARGS=%ARGS% -vf "fifo,setpts=PTS-STARTPTS,format=pix_fmts=yuv420p,scale=-2:360,
+set  ARGS=%ARGS% subtitles=filename='movie subtitles.srt':force_style='Fontname=Tahoma,Fontsize=28,Shadow=1'"
+set  ARGS=%ARGS% output.mp4
+ffmpeg %ARGS%
+
+

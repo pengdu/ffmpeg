@@ -1,0 +1,24 @@
+AVOptions
+-framerate         <video_rate> .D...... set video frame rate (default "ntsc")
+-framerate         <string>     .D......  (default "ntsc")
+-framerate         <video_rate> .D...... set framerate (frames per second) (default "25")
+
+Video options:
+-r rate             set frame rate (Hz value, fraction or abbreviation)
+
+Advanced Video options:
+-force_fps          force the selected framerate, disable the best supported framerate selection
+
+--fps <float|rational>  Specify framerate
+--fps 25
+
+--force-cfr             Force constant framerate timestamp generation
+
+
+-framerate 60 -r 60 --fps 60 -force_fps --force-cfr
+
+
+
+-vf fps="fps=1/60"      = 1fps
+-vf fps="fps=60/60"     = 60fps
+use this instead of -r since -r may be adding too much frames.

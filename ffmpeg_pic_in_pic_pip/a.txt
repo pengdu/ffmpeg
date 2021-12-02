@@ -1,0 +1,2 @@
+ffmpeg -hide_banner -y -i a.mp4 -i b.mkv -filter_complex "[0:v]mpdecimate,setpts=N/FRAME_RATE/TB[a]; [1:v]mpdecimate,setpts=N/FRAME_RATE/TB[b]; [a]scale=2560:1440[a]; [a]setpts=PTS-STARTPTS[a]; [b]setpts=PTS-STARTPTS[b]; [a][b]overlay=main_w/2-overlay_w/2:main_h/2-overlay_h/2[c]; [c]mpdecimate,setpts=N/FRAME_RATE/TB[c]" -map "[c]" -preset veryslow -crf 21 -tune zerolatency -pix_fmt yuv420p -movflags "+faststart" -t 5 multiple_input_8grid.mp4
+

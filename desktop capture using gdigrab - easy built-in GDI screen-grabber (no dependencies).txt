@@ -1,0 +1,25 @@
+------------------------------------------------------------------------
+
+standard:
+ffmpeg -f gdigrab -framerate 25 -i desktop output.mkv
+------------------------------------------------------------------------
+
+use GPU only:
+ffmpeg -y -hwaccel dxva2 -threads 1 -f gdigrab -framerate 25 -i desktop -an -sn output.mkv
+ffmpeg -y -hwaccel cuda  -threads 1 -f gdigrab -framerate 25 -i desktop -an -sn output.mkv
+
+ffmpeg -hwaccel cuda -hwaccel_output_format cuda -threads 1 -f gdigrab -framerate 25 -i desktop -c:v h264_nvenc -preset slow output.mkv
+
+------------------------------------------------------------------------
+
+limit to specific region:
+ffmpeg -f gdigrab -framerate 30 -offset_x 10 -offset_y 20 -video_size 640x480 -show_region 1 -i desktop output.mkv
+
+------------------------------------------------------------------------
+
+https://trac.ffmpeg.org/wiki/Capture/Desktop
+------------------------------------------------------------------------
+
+Note:
+when done, go back to the CMD window, click "q" key to end.
+------------------------------------------------------------------------

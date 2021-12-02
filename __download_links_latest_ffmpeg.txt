@@ -1,0 +1,7 @@
+https://ffmpeg.zeranoe.com/builds/win64/static/?C=M;O=D
+  https://ffmpeg.zeranoe.com/builds/win64/static/ffmpeg-latest-win64-static.zip
+  https://ffmpeg.zeranoe.com/builds/win64/static/ffmpeg-latest-win64-static.7z
+
+https://ffmpeg.zeranoe.com/builds/win32/static/?C=M;O=D
+  https://ffmpeg.zeranoe.com/builds/win32/static/ffmpeg-latest-win32-static.zip
+  https://ffmpeg.zeranoe.com/builds/win32/static/ffmpeg-latest-win32-static.7z

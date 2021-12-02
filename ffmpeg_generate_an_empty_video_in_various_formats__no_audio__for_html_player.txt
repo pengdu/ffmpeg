@@ -1,0 +1,256 @@
+ffmpeg -hide_banner -strict experimental -y -t 2 -f lavfi -i color=c=green:s=320x180  -an -pix_fmt yuv420p -level "3.0" -c:v libx264    -tune stillimage -profile:v "baseline"  video_h264.mp4 
+ffmpeg -hide_banner -strict experimental -y -t 2 -f lavfi -i color=c=green:s=320x180  -an -pix_fmt yuv420p -level "3.0" -c:v libvpx                                             video_vp8.webm 
+ffmpeg -hide_banner -strict experimental -y -t 2 -f lavfi -i color=c=green:s=320x180  -an -pix_fmt yuv420p -level "3.0" -c:v libvpx-vp9                                         video_vp9.webm 
+ffmpeg -hide_banner -strict experimental -y -t 2 -f lavfi -i color=c=green:s=320x180  -an -pix_fmt yuv420p -level "3.0" -c:v libtheora                                          video.ogv      
+ffmpeg -hide_banner -strict experimental -y -t 2 -f lavfi -i color=c=green:s=320x180  -an -pix_fmt yuv420p -level "3.0"                 -tune stillimage                        video_mpeg4.avi
+
+
+-profile:v "baseline" -level "3.0"
+ is encoder  'avc1.42001e'
+
+
+-r rate             set frame rate (Hz value, fraction or abbreviation)
+-s size             set frame size (WxH or abbreviation)
+
+
+ffmpeg -i input.mkv -codec:v libtheora -qscale:v 7 -codec:a libvorbis -qscale:a 5 output.ogv
+ ffmpeg -i sourcevideo.mov -acodec libvorbis -vcodec libtheora -ac 2 -ab 96k -ar 44100 -b 819200 -s 1080×720 Outputvideo.ogv
+ ffmpeg -i input.mp4 -acodec libvorbis -vcodec libtheora -f ogv output.ogv
+
+ffmpeg -i input.mp4 -c:v libvpx-vp9 -b:v 2M -pass 1 -an -f webm /dev/null && \
+ffmpeg -i input.mp4 -c:v libvpx -crf 10 -b:v 1M -c:a libvorbis output.webm
+ffmpeg -i %04d.png -c:v libvpx -pix_fmt yuva420p -metadata:s:v:0 alpha_mode="1" output.webm
+
+
+320×180 -pix_fmt   "yuv420p"                                                                   ^
+
+
+
+
+
+
+
+
+
+
+
+<video autoplay="true" crossorigin="anonymous" loop="true" muted="true" preload="auto" playsinline="true" poster="poster.jpg">
+  <source src="video_h264.mp4"    type='video/mp4;  codecs="avc1.42001E"'  />
+  <source src="video_vp9.webm"    type='video/webm; codecs="vp9.0"'        />
+  <source src="video_vp8.webm"    type='video/webm; codecs="vp8.0"'        />
+  <source src="video_theora.ogv"  type='video/ogg;  codecs="theora"'       />
+  <source src="video_mpeg4.avi"   type='video/avi;  codecs="mpeg4"'        />
+  <p>No Support For HTML5's-video.</p>
+</video>
+
+
+
+
+
+
+<video mute="true" poster="poster.jpg" id="backgroundvid">
+<source src="video.webm" type='video/webm; codecs="vp8.0,vorbis"'   />
+<source src="video.mp4"  type='video/mp4;  codecs="avc1.4D401E, mp4a.40.2"'>
+<p>Fallback content to cover incompatibility issues</p>
+</video>
+
+video#backgroundvid { 
+position: fixed; right: 0; bottom: 0;
+min-width: 100%; min-height: 100%;
+width: auto; height: auto; z-index: -100;
+background: url(polina.jpg) no-repeat;
+background-size: cover; 
+}
+
+html,
+body,
+div,
+h1,
+p,
+a,
+video {
+  margin: 0;
+  padding: 0;
+}
+
+html,
+body {
+  height: 100%;
+}
+
+.content {
+  position: relative;
+  z-index: 2;
+}
+
+.video {
+  position: fixed;
+  z-index: 1;
+   position: fixed;
+  top: 50%; left: 50%;
+    transform: translate(-50%, -50%);
+}
+
+.mbr-background-video,
+.mbr-background-video-preview {
+  bottom: 0;
+  left: 0;
+  overflow: hidden;
+  position: absolute;
+  right: 0;
+  top: 0;
+}
+.mbr-parallax-background,
+.mbr-background {
+  background-attachment: fixed !important;
+  background-position: 50% 0;
+  background-repeat: no-repeat;
+  background-size: cover !important;
+}
+.mbr-hidden-scrollbar .mbr-parallax-background {
+  background-size: auto 130%;
+}
+
+
+
+
+
+video{
+  width:    120%;
+  height:   120%;
+  padding:   0px;
+  margin:    0px;
+  z-index:     1;
+
+  display:    block;
+  overflow:   hidden;
+
+  box-sizing:             border-box;
+  background-clip:        border-box;
+  background-origin:      border-box;
+  background-position: center center;
+  background-repeat:       no-repeat;
+  background-size:             cover;
+/*background-image:    url(data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAUAAAAFCAYAAACNbyblAAAAAXNSR0IArs4c6QAAAARnQU1BAACxjwv8YQUAAAAJcEhZcwAADsMAAA7DAcdvqGQAAAAZdEVYdFNvZnR3YXJlAHBhaW50Lm5ldCA0LjAuMTZEaa/1AAAAaElEQVQYV2OIXL30v9uyHf8PHLP7//8GAxgzbDvi8X/Z/oj/zy7z/j/3kOH/u1tAwR/X2P9/vcrxf/tjhv/xPxj+z30NFAQp/3KT4X/VZ4b/Pv8Y/qd/gwp+AGqp+8Tw3xcomPOF4T8A07hB94U1kLIAAAAASUVORK5CYII=);*/
+
+  text-align:             center;
+  vertical-align:         middle;
+
+  resize:            none;
+
+     -webkit-user-zoom: none;
+        -moz-user-zoom: none;
+         -ms-user-zoom: none;
+          -o-user-zoom: none;
+             user-zoom: none;
+     
+     -webkit-user-drag: none;
+        -moz-user-drag: none;
+         -ms-user-drag: none;
+          -o-user-drag: none;
+             user-drag: none;
+
+    -webkit-user-focus: none;
+       -moz-user-focus: none;
+        -ms-user-focus: none;
+         -o-user-focus: none;
+            user-focus: none;
+
+    -webkit-user-input: none;
+       -moz-user-input: none;
+        -ms-user-input: none;
+         -o-user-input: none;
+            user-input: none;
+
+   -webkit-user-modify: none;
+      -moz-user-modify: none;
+       -ms-user-modify: none;
+        -o-user-modify: none;
+           user-modify: none;
+
+   -webkit-user-select: none;
+      -moz-user-select: none;
+       -ms-user-select: none;
+        -o-user-select: none;
+           user-select: none;
+
+-webkit-pointer-events: none;
+   -moz-pointer-events: none;
+    -ms-pointer-events: none;
+     -o-pointer-events: none;
+        pointer-events: none;
+
+  -webkit-touch-action: none;
+     -moz-touch-action: none;
+      -ms-touch-action: none;
+       -o-touch-action: none;
+          touch-action: none;
+}
+
+var video       = document.querySelector("video")
+   ,full_screen = video.webkitRequestFullscreen
+               || video.mozRequestFullScreen
+               || video.msRequestFullscreen
+               || video.requestFullscreen 
+               || (function(){})
+               ;
+
+
+if (elem.requestFullscreen) {
+  elem.requestFullscreen();
+} else if (elem.mozRequestFullScreen) {
+  elem.mozRequestFullScreen();
+} else if (elem.webkitRequestFullscreen) {
+  elem.webkitRequestFullscreen();
+} else if (elem.msRequestFullscreen) { 
+  elem.msRequestFullscreen();
+}
+
+
+Also for Edge or IE browsers add: else if (elem.msRequestFullscreen) { elem.msRequestFullscreen();} – 
+
+
+
+video {
+    position: fixed; right: 0; bottom: 0;
+    min-width: 100%; min-height: 100%;
+    width: auto; height: auto; z-index: -100;
+    background: url(polina.jpg) no-repeat;
+    background-size: cover;
+}
+
+
+var videoElement = document.getElementById('videoId');    
+videoElement.webkitRequestFullScreen();
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+---------------------------
+trying 3 seconds video with information ahead
+ffmpeg -hide_banner -strict experimental -y -t 3 -f lavfi  -i color=c=green:s=320x180  -r 25 -movflags "+faststart"  -an -pix_fmt yuv420p -level "3.0" -c:v libx264    -tune stillimage -profile:v "baseline"  video_h264_3seconds_faststart.mp4
+ffmpeg -hide_banner -strict experimental -y -t 3 -f lavfi  -i color=c=green:s=320x180  -r 25 -movflags "+faststart"  -an -pix_fmt yuv420p -level "3.0" -c:v libvpx-vp9                                         video_vp9_3seconds_faststart.webm 
+ffmpeg -hide_banner -strict experimental -y -t 3 -f lavfi  -i color=c=green:s=320x180  -r 25 -movflags "+faststart"  -an -pix_fmt yuv420p -level "3.0" -c:v libvpx                                             video_vp8_3seconds_faststart.webm 
+ffmpeg -hide_banner -strict experimental -y -t 3 -f lavfi  -i color=c=green:s=320x180  -r 25 -movflags "+faststart"  -an -pix_fmt yuv420p -level "3.0" -c:v libtheora                                          video_ogv_3seconds_faststart.ogv      

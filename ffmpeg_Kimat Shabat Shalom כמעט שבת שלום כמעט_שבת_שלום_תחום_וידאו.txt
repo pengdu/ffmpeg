@@ -1,0 +1,91 @@
+eretz_nehederet_s13e01.mp4 00:39:00.680-00:39:19.120                                        00:00:18.440
+eretz_nehederet_s13e02.mp4 00:34:59.480-00:35:22.720                                        00:00:23.240
+eretz_nehederet_s13e03.mp4 00:24:36.240-00:24:56.200                                        00:00:19.960
+eretz_nehederet_s13e04.mp4 00:28:03.433-00:28:22.911                                        00:00:19.478
+eretz_nehederet_s13e05.mp4 00:34:29.120-00:34:44.800                                        00:00:15.680
+eretz_nehederet_s13e06.mp4 [00:41:08.190-00:41:10.720] 00:42:05.480-00:42:22.120            [00:00:02.530]  00:00:16.640
+eretz_nehederet_s13e07.mp4 00:37:08.680-00:37:33.600                                        00:00:24.920
+eretz_nehederet_s13e08.mp4 [00:23:05.560-00:23:12.360] 00:24:42.080-00:24:58.960            [00:00:06.800]  00:00:16.880
+eretz_nehederet_s13e09.mp4 ----
+eretz_nehederet_s13e10.mp4 [00:24:58.960-00:28:14.360] 00:28:14.360-00:30:12.840            [00:03:15.400]  00:01:58.480
+
+------------------------------------------------------------------------------------------------------------------------
+######## join videos
+ffmpeg -f concat -i kimat_shabat_shalom_all.txt -acodec copy -vcodec copy all.mp4
+
+######## join videos
+ffmpeg -f concat -i kimat_shabat_shalom_all.txt -vsync 2 -async 1 -g 1 -vf "yadif=0:-1:0" all.mp4
+
+######## join videos with more processing  xxxxxxxxxxx seems to have problem (for fix see above)
+ffmpeg -f concat -i kimat_shabat_shalom_all.txt -vf "yadif=0:-1:0" -vsync 2 -async 1 all.mp4
+
+
+######## also deinterlace -vf "yadif=0:-1:0"
+ffmpeg -ss "00:39:00.000" -i eretz_nehederet_s13e01.mp4 -ss "00:00:00.680" -t "00:00:18.440" -vf "yadif=0:-1:0" -vsync 2 -async 1 kimat_shabat_shalom_s13e01.mp4
+ffmpeg -ss "00:34:59.000" -i eretz_nehederet_s13e02.mp4 -ss "00:00:00.480" -t "00:00:23.240" -vf "yadif=0:-1:0" -vsync 2 -async 1 kimat_shabat_shalom_s13e02.mp4
+ffmpeg -ss "00:24:36.000" -i eretz_nehederet_s13e03.mp4 -ss "00:00:00.240" -t "00:00:19.960" -vf "yadif=0:-1:0" -vsync 2 -async 1 kimat_shabat_shalom_s13e03.mp4
+ffmpeg -ss "00:28:03.000" -i eretz_nehederet_s13e04.mp4 -ss "00:00:00.433" -t "00:00:19.478" -vf "yadif=0:-1:0" -vsync 2 -async 1 kimat_shabat_shalom_s13e04.mp4
+ffmpeg -ss "00:34:29.000" -i eretz_nehederet_s13e05.mp4 -ss "00:00:00.120" -t "00:00:15.680" -vf "yadif=0:-1:0" -vsync 2 -async 1 kimat_shabat_shalom_s13e05.mp4
+ffmpeg -ss "00:41:08.000" -i eretz_nehederet_s13e06.mp4 -ss "00:00:00.190" -t "00:00:02.530" -vf "yadif=0:-1:0" -vsync 2 -async 1 kimat_shabat_shalom_s13e06_1.mp4
+ffmpeg -ss "00:42:05.000" -i eretz_nehederet_s13e06.mp4 -ss "00:00:00.480" -t "00:00:16.640" -vf "yadif=0:-1:0" -vsync 2 -async 1 kimat_shabat_shalom_s13e06_2.mp4
+ffmpeg -ss "00:37:08.000" -i eretz_nehederet_s13e07.mp4 -ss "00:00:00.680" -t "00:00:24.920" -vf "yadif=0:-1:0" -vsync 2 -async 1 kimat_shabat_shalom_s13e07.mp4
+ffmpeg -ss "00:23:05.000" -i eretz_nehederet_s13e08.mp4 -ss "00:00:00.560" -t "00:00:06.800" -vf "yadif=0:-1:0" -vsync 2 -async 1 kimat_shabat_shalom_s13e08_1.mp4
+ffmpeg -ss "00:24:42.000" -i eretz_nehederet_s13e08.mp4 -ss "00:00:00.080" -t "00:00:16.880" -vf "yadif=0:-1:0" -vsync 2 -async 1 kimat_shabat_shalom_s13e08_2.mp4
+
+
+######## join videos
+ffmpeg -f concat -i kimat_shabat_shalom_all.txt -vsync 2 -async 1 all.mp4
+    *** file looks like:
+            file 'kimat_shabat_shalom_s13e01.mp4'
+            file 'kimat_shabat_shalom_s13e02.mp4'
+            ......
+
+
+######## with encoding and drop bad frames
+ffmpeg -ss "00:39:00.000" -i eretz_nehederet_s13e01.mp4 -ss "00:00:00.680" -t "00:00:18.440" -vsync 2 -async 1 kimat_shabat_shalom_s13e01.mp4
+ffmpeg -ss "00:34:59.000" -i eretz_nehederet_s13e02.mp4 -ss "00:00:00.480" -t "00:00:23.240" -vsync 2 -async 1 kimat_shabat_shalom_s13e02.mp4
+ffmpeg -ss "00:24:36.000" -i eretz_nehederet_s13e03.mp4 -ss "00:00:00.240" -t "00:00:19.960" -vsync 2 -async 1 kimat_shabat_shalom_s13e03.mp4
+ffmpeg -ss "00:28:03.000" -i eretz_nehederet_s13e04.mp4 -ss "00:00:00.433" -t "00:00:19.478" -vsync 2 -async 1 kimat_shabat_shalom_s13e04.mp4
+ffmpeg -ss "00:34:29.000" -i eretz_nehederet_s13e05.mp4 -ss "00:00:00.120" -t "00:00:15.680" -vsync 2 -async 1 kimat_shabat_shalom_s13e05.mp4
+ffmpeg -ss "00:41:08.000" -i eretz_nehederet_s13e06.mp4 -ss "00:00:00.190" -t "00:00:02.530" -vsync 2 -async 1 kimat_shabat_shalom_s13e06_1.mp4
+ffmpeg -ss "00:42:05.000" -i eretz_nehederet_s13e06.mp4 -ss "00:00:00.480" -t "00:00:16.640" -vsync 2 -async 1 kimat_shabat_shalom_s13e06_2.mp4
+ffmpeg -ss "00:37:08.000" -i eretz_nehederet_s13e07.mp4 -ss "00:00:00.680" -t "00:00:24.920" -vsync 2 -async 1 kimat_shabat_shalom_s13e07.mp4
+ffmpeg -ss "00:23:05.000" -i eretz_nehederet_s13e08.mp4 -ss "00:00:00.560" -t "00:00:06.800" -vsync 2 -async 1 kimat_shabat_shalom_s13e08_1.mp4
+ffmpeg -ss "00:24:42.000" -i eretz_nehederet_s13e08.mp4 -ss "00:00:00.080" -t "00:00:16.880" -vsync 2 -async 1 kimat_shabat_shalom_s13e08_2.mp4
+
+
+
+######## with encoding
+ffmpeg -ss "00:39:00.000" -i eretz_nehederet_s13e01.mp4 -ss "00:00:00.680" -t "00:00:18.440" kimat_shabat_shalom_s13e01.mp4
+ffmpeg -ss "00:34:59.000" -i eretz_nehederet_s13e02.mp4 -ss "00:00:00.480" -t "00:00:23.240" kimat_shabat_shalom_s13e02.mp4
+ffmpeg -ss "00:24:36.000" -i eretz_nehederet_s13e03.mp4 -ss "00:00:00.240" -t "00:00:19.960" kimat_shabat_shalom_s13e03.mp4
+ffmpeg -ss "00:28:03.000" -i eretz_nehederet_s13e04.mp4 -ss "00:00:00.433" -t "00:00:19.478" kimat_shabat_shalom_s13e04.mp4
+ffmpeg -ss "00:34:29.000" -i eretz_nehederet_s13e05.mp4 -ss "00:00:00.120" -t "00:00:15.680" kimat_shabat_shalom_s13e05.mp4
+ffmpeg -ss "00:41:08.000" -i eretz_nehederet_s13e06.mp4 -ss "00:00:00.190" -t "00:00:02.530" kimat_shabat_shalom_s13e06_1.mp4
+ffmpeg -ss "00:42:05.000" -i eretz_nehederet_s13e06.mp4 -ss "00:00:00.480" -t "00:00:16.640" kimat_shabat_shalom_s13e06_2.mp4
+ffmpeg -ss "00:37:08.000" -i eretz_nehederet_s13e07.mp4 -ss "00:00:00.680" -t "00:00:24.920" kimat_shabat_shalom_s13e07.mp4
+ffmpeg -ss "00:23:05.000" -i eretz_nehederet_s13e08.mp4 -ss "00:00:00.560" -t "00:00:06.800" kimat_shabat_shalom_s13e08_1.mp4
+ffmpeg -ss "00:24:42.000" -i eretz_nehederet_s13e08.mp4 -ss "00:00:00.080" -t "00:00:16.880" kimat_shabat_shalom_s13e08_2.mp4
+
+######## no encoding
+ffmpeg -ss "00:39:00.000" -i eretz_nehederet_s13e01.mp4 -vcodec copy -acodec copy -ss "00:00:00.680" -t "00:00:18.440" kimat_shabat_shalom_s13e01.mp4
+ffmpeg -ss "00:34:59.000" -i eretz_nehederet_s13e02.mp4 -vcodec copy -acodec copy -ss "00:00:00.480" -t "00:00:23.240" kimat_shabat_shalom_s13e02.mp4
+ffmpeg -ss "00:24:36.000" -i eretz_nehederet_s13e03.mp4 -vcodec copy -acodec copy -ss "00:00:00.240" -t "00:00:19.960" kimat_shabat_shalom_s13e03.mp4
+ffmpeg -ss "00:28:03.000" -i eretz_nehederet_s13e04.mp4 -vcodec copy -acodec copy -ss "00:00:00.433" -t "00:00:19.478" kimat_shabat_shalom_s13e04.mp4
+ffmpeg -ss "00:34:29.000" -i eretz_nehederet_s13e05.mp4 -vcodec copy -acodec copy -ss "00:00:00.120" -t "00:00:15.680" kimat_shabat_shalom_s13e05.mp4
+ffmpeg -ss "00:41:08.000" -i eretz_nehederet_s13e06.mp4 -vcodec copy -acodec copy -ss "00:00:00.190" -t "00:00:02.530" kimat_shabat_shalom_s13e06_1.mp4
+ffmpeg -ss "00:42:05.000" -i eretz_nehederet_s13e06.mp4 -vcodec copy -acodec copy -ss "00:00:00.480" -t "00:00:16.640" kimat_shabat_shalom_s13e06_2.mp4
+ffmpeg -ss "00:37:08.000" -i eretz_nehederet_s13e07.mp4 -vcodec copy -acodec copy -ss "00:00:00.680" -t "00:00:24.920" kimat_shabat_shalom_s13e07.mp4
+ffmpeg -ss "00:23:05.000" -i eretz_nehederet_s13e08.mp4 -vcodec copy -acodec copy -ss "00:00:00.560" -t "00:00:06.800" kimat_shabat_shalom_s13e08_1.mp4
+ffmpeg -ss "00:24:42.000" -i eretz_nehederet_s13e08.mp4 -vcodec copy -acodec copy -ss "00:00:00.080" -t "00:00:16.880" kimat_shabat_shalom_s13e08_2.mp4
+ffmpeg -ss "00:24:58.000" -i eretz_nehederet_s13e10.mp4 -vcodec copy -acodec copy -ss "00:00:00.960" -t "00:03:15.400" kimat_shabat_shalom_s13e10_1.mp4
+ffmpeg -ss "00:28:14.000" -i eretz_nehederet_s13e10.mp4 -vcodec copy -acodec copy -ss "00:00:00.360" -t "00:01:58.480" kimat_shabat_shalom_s13e10_2.mp4
+
+
+
+
+ && ffmpeg -i kimat_shabat_shalom_s13e01_tmp.mp4 -g 1 kimat_shabat_shalom_s13e01.mp4 && del /f kimat_shabat_shalom_s13e01_tmp.mp4
+ffmpeg -ss "00:39:00.00" -i eretz_nehederet_s13e01.mp4 -vcodec copy -acodec copy -ss "00:00:00.680" -g 1 -t "00:00:18.440" kimat_shabat_shalom_s13e01_tmp.mp4 && ffmpeg -i kimat_shabat_shalom_s13e01_tmp.mp4 -g 1 kimat_shabat_shalom_s13e01.mp4 && del /f kimat_shabat_shalom_s13e01_tmp.mp4
+
+
+

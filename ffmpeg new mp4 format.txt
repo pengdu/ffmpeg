@@ -1,0 +1,27 @@
+call ffmpeg -y -i "20160705_052017.mp4" -i "20160705_052646.mp4" -bt 100M -vf "yadif=0:0:1,setpts=0.125*PTS" -tag:v hvc1 -c:v libx265 -preset veryslow -crf 23 -pix_fmt yuv420p "output.mkv"
+
+C:\Users\Elad\Desktop>call ffmpeg -y -i "20160705_052017.mp4" -i "20160705_052646.mp4" -bt 100M -vf "yadif=0:0:1,select=gt(scene\,0.80)" -tag:v hvc1 -c:v libx265 -preset veryslow -crf 23 -pix_fmt yuv420p "output.mkv"
+
+
+call ffmpeg -y -i "20160705_052017.mp4" -i "20160705_052646.mp4" -bt 100M -vf "yadif=0:0:1,select=gt(scene\,0.80)" -tag:v hvc1 -c:v libx265 -preset veryslow -crf 23 -pix_fmt yuv420p "output.mkv"
+
+call ffmpeg -y -i "20160705_052017.mp4" -i "20160705_052646.mp4" -bt 100M -vf "select=gt(scene\,0.20),yadif=0:0:1" -c:v libx264 -preset ultrafast -crf 30 -c:a copy -pix_fmt yuv420p "output.mkv"
+
+call ffmpeg -threads 8 -i "20160705_052017.mp4" -bt 100M -vf "select=gt(scene\,0.60),yadif=0:0:1,scale=1920:1080" -g 5 -vsync 2 -async 1 -tag:v hvc1 -c:v libx265 -preset ultrafast -crf 23 -c:a libvorbis -q:a 5 -pix_fmt yuv420p "20160705_052017__output.mp4"
+
+
+call ffmpeg -threads 8 -i %VIDEO% -bt 100M -vf "select=gt(scene\,0.60),yadif=0:0:1,scale=1920:1080" -g 5 -vsync 2 -async 1 -c:v libx264 -preset slow -crf 18 -c:a libvorbis -q:a 5 -pix_fmt yuv420p %OUTPUT%
+
+
+call ffmpeg -threads 8 -i %VIDEO% -vf "yadif=0:0:1,scale=1280:720" -g 5 -vsync 2 -async 1 -c:v libx264 -preset slow -crf 18 -c:a libvorbis -q:a 5 -pix_fmt yuv420p %OUTPUT%
+
+
+"scale='if(gt(a,16/9),1280,-1)':'if(gt(a,16/9),-1,720)',crop='in_h*16/9:in_h',scale='trunc(oh*a/2)*2:720'"
+
+
+call ffmpeg -threads 8 -i %VIDEO% -g 5 -vf "yadif=0:0:1" -vsync 2 -async 1 -c:v libx264 -preset slow -crf 18 -c:a libvorbis -q:a 5 -pix_fmt yuv420p -vf "crop=in_h*16/9:in_h,scale=1280:720" %OUTPUT%
+
+call ffmpeg -threads 8 -i %VIDEO% -g 5 -vf "yadif=0:0:1" -vsync 2 -async 1 -c:v libx264 -preset slow -crf 18 -c:a libvorbis -q:a 5 -pix_fmt yuv420p -vf "crop=in_h*16/9:in_h,scale=trunc(oh*a/2)*2:720"  %OUTPUT%
+
+
+ffmpeg -threads 8 -ss 100 -i "Independents.Day.2016.HDRip.XviD.AC3-EVO.avi" -bt 100M -vf "select=gt(scene\,0.20)" -frames:v 50 -filter:v fps=1/131 out%04d.jpg

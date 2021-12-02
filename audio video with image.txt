@@ -1,0 +1,1 @@
+ffmpeg -y -r 1 -loop 1 -i cover.png -i audioboob.m4a -c:a copy -shortest audiobook.m4v

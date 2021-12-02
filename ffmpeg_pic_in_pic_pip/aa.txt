@@ -1,0 +1,8 @@
+ffmpeg -f lavfi -i testsrc -f lavfi -i testsrc -f lavfi -i testsrc -f lavfi -i testsrc -filter_complex \
+"[0:v]pad=iw*2:ih*2[a]; \
+ [1:v]negate[b]; \
+ [2:v]hflip[c]; \
+ [3:v]edgedetect[d]; \
+ [a][b]overlay=w[x]; \
+ [x][c]overlay=0:h[y]; \
+ [y][d]overlay=w:h[out]" -map "[out]" -c:v ffv1 -t 5 multiple_input_grid.avi

@@ -1,0 +1,40 @@
+official option is to show all streams and all formats
+
+ffprobe -i input.mp4 -v "error" -show_format -show_streams
+
+
+-------------------------------------------------------------------------------
+this is better:  (display everything from the stream, with "keys" so you'll know which one to get...)
+
+ffprobe -i "image.png" -v "error" -select_streams "v:0" -show_entries "stream" -print_format "default=noprint_wrappers=1"
+
+
+-------------------------------------------------------------------------------
+
+and once you have all of the your can extract the one needed (for example "width")
+
+ffprobe -i "image.png" -v "error" -select_streams "v:0" -show_entries "stream=width" -print_format "default=noprint_wrappers=1:nokey=1"
+
+
+
+
+
+
+
+
+-------------------------------------------------------------------------------
+
+show codec-name 
+
+ffprobe -i "image.png" -v "error" -select_streams "v:0" -show_entries "stream=codec_name" -print_format "default=noprint_wrappers=1:nokey=1"
+
+codec_name=h264         - .MP4
+codec_name=mpeg1video   - .MPG .MPEG
+codec_name=mpeg4        - .AVI             --- only those can support   -bsf:v "mpeg4_unpack_bframes,remove_extra=freq=all"
+
+but you can simply use:
+  if /i ["%~x1"] EQU [".avi"] ( 
+    set ARGS=%ARGS% -bsf:v  "mpeg4_unpack_bframes,remove_extra=freq=all"
+  ) else ( 
+    set ARGS=%ARGS% -bsf:v  "remove_extra=freq=all"
+  ) 

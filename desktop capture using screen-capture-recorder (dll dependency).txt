@@ -1,0 +1,73 @@
+get ffmpeg for windows from https://github.com/BtbN/FFmpeg-Builds/releases/latest
+  download ........win64-gpl.zip for exes (100mb) or ...........win64-gpl-shared.zip for exes and shared dll (30mb) its the same.
+place the content somewhere, optionally add the folder to the system PATH so you could run ffmpeg.exe or ffplay.exe from anywhere.
+
+get
+  screen-capture-recorder.dll
+  screen-capture-recorder-x64.dll
+from one of the releases in: https://github.com/rdp/screen-capture-recorder-to-video-windows-free/releases
+there are audio_sniffer.dll and audio_sniffer-x64.dll too if you want audio capture as well but you better not.
+
+place the dlls somewhere you don't need to move them afterwards.
+register the dlls using:
+regsvr32 screen-capture-recorder.dll
+regsvr32 screen-capture-recorder-x64.dll
+
+the following commands will help you with first few usage-cases
+---------------------------------------------------------------------------
+figure out if you have registered the dlls properly
+
+ffmpeg -y -hide_banner -loglevel "info"   -list_devices true -f dshow -i dummy
+      [dshow @ 0000017047b04e40] DirectShow video devices (some may be both video and audio devices)
+      [dshow @ 0000017047b04e40]  "Integrated Camera"
+      [dshow @ 0000017047b04e40]     Alternative name "@device_pnp_\\?\usb#vid_13d3&pid_56ff&mi_00#6&22a006d0&0&0000#{aaaaaaaa-8f56-11d0-a3b9-aaaaaaaa}\global"
+      [dshow @ 0000017047b04e40]  "screen-capture-recorder"
+      [dshow @ 0000017047b04e40]     Alternative name "@device_sw_{860BB310-5D01-11D0-BD3B-aaaaaaaa}\{aaaaaaaa-2C8A-4AE6-A561-aaaaaaaa}"
+      [dshow @ 0000017047b04e40] DirectShow audio devices
+      [dshow @ 0000017047b04e40]  "external microphone (Realtek(R) Audio)"
+      [dshow @ 0000017047b04e40]     Alternative name "@device_cm_{aaaaaaaa-90C8-11D0-BD43-aaaaaaaa}\wave_{aaaaa-F460-4E13-8BD7-aaaaaaaa}"
+      [dshow @ 0000017047b04e40]  "Microphone Array (Intel® Smart Sound Technology for Digital Microphones)"
+      [dshow @ 0000017047b04e40]     Alternative name "@device_cm_{aaaaaaaa-90C8-11D0-BD43-aaaaaaaa}\wave_{aaaaaaaa-D4FB-4BC1-989C-aaaaaaaa}"
+      dummy: Immediate exit requested
+
+yes, "screen-capture-recorder" is here.
+---------------------------------------------------------------------------
+figure out all the formats that are available for you.
+
+ffmpeg -y -hide_banner -loglevel "info" -f dshow -list_options true -i video="screen-capture-recorder"
+      [dshow @ 000001cb74934e80] DirectShow video device options (from video devices)
+      [dshow @ 000001cb74934e80]  Pin "Capture" (alternative pin name "1")
+      [dshow @ 000001cb74934e80]   pixel_format=bgr0  min s=1x1 fps=0.02 max s=1280x720 fps=30
+      [dshow @ 000001cb74934e80]   pixel_format=bgr0  min s=1x1 fps=0.02 max s=1280x720 fps=30
+      [dshow @ 000001cb74934e80]   pixel_format=bgr24  min s=1x1 fps=0.02 max s=1280x720 fps=30
+      [dshow @ 000001cb74934e80]   pixel_format=rgb555le  min s=1x1 fps=0.02 max s=1280x720 fps=30
+      [dshow @ 000001cb74934e80]   pixel_format=rgb555le  min s=1x1 fps=0.02 max s=1280x720 fps=30
+      [dshow @ 000001cb74934e80]   pixel_format=rgb8  min s=1x1 fps=0.02 max s=1280x720 fps=30
+      [dshow @ 000001cb74934e80]   pixel_format=yuv420p  min s=1x1 fps=0.02 max s=1280x720 fps=30
+---------------------------------------------------------------------------
+preview.
+
+ffplay -y -hide_banner -loglevel "info" -strict "experimental" -rtbufsize 200M -f dshow -video_size "1280x720" -framerate "30.0" -pixel_format "yuv420p" -i video="screen-capture-recorder" -an -sn
+
+you can also apply video filters to the preview, here is how to rotate it upside-down.
+ffplay -y -hide_banner -loglevel "info" -strict "experimental" -rtbufsize 200M -f dshow -video_size "1280x720" -framerate "30.0" -pixel_format "yuv420p" -i video="screen-capture-recorder" -an -sn -vf "transpose=cclock,transpose=cclock"
+
+---------------------------------------------------------------------------
+capture to a video file (uncompressed, mkv container)
+
+ffmpeg -y -hide_banner -loglevel "info" -strict "experimental" -rtbufsize 200M -f dshow -video_size "1280x720" -framerate "30.0" -pixel_format "yuv420p" -fflags "+autobsf+genpts+discardcorrupt" -i video="screen-capture-recorder" -an -sn -c:v copy  "rawvideo.mkv"
+
+or to a h.264-mp4 file (within a mkv container)
+ffmpeg -y -hide_banner -loglevel "info" -strict "experimental" -rtbufsize 200M -f dshow -video_size "1280x720" -framerate "30.0" -pixel_format "yuv420p" -fflags "+autobsf+genpts+discardcorrupt" -i video="screen-capture-recorder" -an -sn -c:v libx264 -preset veryslow -crf 18 -profile:v baseline -level "3.0" -bf 2 -vf "fifo,fps=fps=30" -movflags "+faststart" "video.mkv"
+
+youtube requires some additional tweaks that increases the file-size x4 (mostly the gop-related parameters).
+ffmpeg -y -hide_banner -loglevel "info" -strict "experimental" -rtbufsize 1500M -f dshow -video_size "1280x720" -framerate "30.0" -pixel_format "yuv420p" -fflags "+autobsf+genpts+discardcorrupt" -i video="screen-capture-recorder" -an -sn -c:v libx264 -preset veryslow -crf 18 -profile:v high -vf "fifo,fps=fps=30" -bf 2 -g 15 -x264-params "keyint=15:min-keyint=15:scenecut=0:bframes=2:b-adapt=2:ref=2:open-gop=0" -coder cabac -movflags "+faststart" "video.mkv"
+
+-------------------------------------------------------------------------------------------
+note:
+
+the original dll is not recognise windows DPI other than "100%",  
+meaning if you use a 150% dpi in ease-of-access (for example) some of the screen will get cropped.
+it can not be fixed due to how the dll gets the direct-show driver data. not even with patching the dll manifest into being dpi-aware.
+
+

@@ -1,0 +1,12 @@
+bm3d
+
+https://ffmpeg.org/ffmpeg-filters.html#toc-hqdn3d-1
+https://ffmpeg.org/ffmpeg-filters.html#toc-nlmeans-1
+https://ffmpeg.org/ffmpeg-filters.html#removegrain
+http://avisynth.nl/index.php/Hqdn3d
+http://ffmpeg.org/ffmpeg-filters.html#atadenoise
+http://ffmpeg.org/ffmpeg-filters.html#owdenoise
+http://ffmpeg.org/ffmpeg-filters.html#vaguedenoiser
+https://en.wikipedia.org/wiki/Cohen%E2%80%93Daubechies%E2%80%93Feauveau_wavelet
+http://faculty.gvsu.edu/aboufade/web/wavelets/student_work/EF/how-works.html
+https://www.ncbi.nlm.nih.gov/pmc/articles/PMC5028360/

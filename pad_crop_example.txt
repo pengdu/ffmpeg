@@ -1,0 +1,2 @@
+ffmpeg -y -i 076---Rabbit-of-Seville.avi -vf "pad=ih*16/9:ih:(ow-iw)/2:(oh-ih)/2" -crf 17 -preset ultrafast "076---Rabbit-of-Seville_169.mp4"
+-vf crop=trunc(in_w/2)*2:trunc(in_h/2)*2

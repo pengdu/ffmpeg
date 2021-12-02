@@ -1,0 +1,15 @@
+ffmpeg -y -hide_banner -i "input.mp4" -bt 50M -vf "mpdecimate,setpts=N/FRAME_RATE/TB" -preset veryslow -crf 21 -vsync 2 -async 1 -tune zerolatency -movflags "+faststart" -pix_fmt yuv420p "output.mp4"
+
++make it play well on Android devices.
+ffmpeg -y -hide_banner -i "input.mp4" -profile:v "baseline" -level "3.0" -bt 50M -vf "mpdecimate,setpts=N/FRAME_RATE/TB" -preset veryslow -crf 21 -vsync 2 -async 1 -tune zerolatency -movflags "+faststart" -pix_fmt yuv420p "output.mp4"
+
++makes FFMPEG parse correctly 60 frames-per-second on Samsung and Canon's "1080i AVHCD" HD videos
+
+ffmpeg -y -hide_banner -r 60 -i "input.mp4" -profile:v "baseline" -level "3.0" -bt 50M -vf "mpdecimate,setpts=N/FRAME_RATE/TB" -preset veryslow -crf 21 -vsync 2 -async 1 --force-cfr --fps 60 -tune zerolatency -movflags "+faststart" -pix_fmt yuv420p "output.mp4"
+
+
+
+
+ (force input FPS using "-r" and output FPS using "--fps")
+
+ffmpeg -y -hide_banner -framerate 60 -r 60 --fps 60 -force_fps --force-cfr -i "input.mp4" -framerate 60 -r 60 --fps 60 -force_fps --force-cfr -profile:v "baseline" -level "3.0" -bt 50M -vf "mpdecimate,setpts=N/FRAME_RATE/TB" -preset veryslow -crf 21 -vsync 2 -async 1 -tune zerolatency -movflags "+faststart" -pix_fmt yuv420p "output.mp4"

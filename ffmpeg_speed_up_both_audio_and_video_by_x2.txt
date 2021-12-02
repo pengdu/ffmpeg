@@ -1,0 +1,16 @@
+ffmpeg -i input.mkv -filter_complex "[0:v]setpts=0.5*PTS[v];[0:a]atempo=2.0[a]" -map "[v]" -map "[a]" output.mkv
+
+
+::::: https://trac.ffmpeg.org/wiki/How%20to%20speed%20up%20/%20slow%20down%20a%20video
+
+
+
+
+::video 1/2 speed
+ffmpeg -i input.mkv -filter:v "setpts=2.0*PTS" output.mkv
+
+::video x2 speed
+ffmpeg -i input.mkv -filter:v "setpts=0.5*PTS" output.mkv
+
+::audio x2
+ffmpeg -i input.mkv -filter:a "atempo=2.0" -vn output.mkv
