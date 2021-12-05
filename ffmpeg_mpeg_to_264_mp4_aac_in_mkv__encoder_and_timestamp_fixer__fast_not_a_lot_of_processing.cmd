@@ -73,7 +73,7 @@
 
 
   title [encode mp4 %~n1]
-  call ffmpeg %ARGS%
+  start "ffmpeg" /wait /low /b ffmpeg %ARGS%
   set "EXIT_CODE=%ErrorLevel%
 
   if ["%EXIT_CODE%"] NEQ ["0"] ( goto END )
